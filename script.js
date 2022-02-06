@@ -1,15 +1,49 @@
 
 const board = document.getElementById('letter-board')
+const keyboard = document.getElementById('keyboard')
+
+// get dictionary words from json file
+let dictionary
+getDictionary()
+async function getDictionary() {
+    const res = await fetch('/dictionary.json')
+    const result = await res.json()
+    console.log('Dictionary loaded')
+    dictionary = result
+}
+
+// get targetWords from json file
+let targetWords
+getTargetWords()
+async function getTargetWords() {
+    const res = await fetch('/targetWords.json')
+    const result = await res.json()
+    console.log('target words loaded')
+    targetWords = result
+}
 
 allowInput()
 function allowInput() {
-    document.getElementById('keyboard').addEventListener('click', (e) => e.target.dataset.key && processInput(e.target.dataset.key))
-
-    document.addEventListener('keyup', (e) => (e.key.match(/^[a-z]$/) || e.key === "Enter" || e.key === "Backspace") && processInput(e.key))
+    keyboard.addEventListener('click', processMouseClick)
+    document.addEventListener('keyup', processKeyboardType)
+}
+function blockInput() {
+    keyboard.removeEventListener('click', processMouseClick)
+    document.removeEventListener('keyup', processKeyboardType)
 }
 
+function processKeyboardType(e) {
+    (e.key.match(/^[a-z]$/) || e.key === "Enter" || e.key === "Backspace") && processInput(e.key)
+}
+function processMouseClick(e) {
+    e.target.dataset.key && processInput(e.target.dataset.key)
+}
+
+function getActiveBoxes() { return [...board.querySelectorAll('.box.active')] }
+
 function processInput(key) {
-    const activeBoxes = [...board.querySelectorAll('.box.active')]
+    console.log(key)
+    const activeBoxes = getActiveBoxes()
     if (key === "Enter") {
         processSubmit()
         return
@@ -21,12 +55,12 @@ function processInput(key) {
         emptyBox.textContent = key
         emptyBox.dataset.letter = key
         emptyBox.classList.add('active')
-        console.log(emptyBox, key)
     }
 }
 
 function processDelete() {
-    const activeBoxes = [...board.querySelectorAll('.box.active')]
+    const activeBoxes = getActiveBoxes()
+    if (activeBoxes.length === 0) return
     const lastBox = activeBoxes.pop()
     lastBox.textContent = ""
     delete lastBox.dataset.letter
@@ -34,7 +68,24 @@ function processDelete() {
 }
 
 function processSubmit() {
-    const activeBoxes = [...board.querySelectorAll('[data-letter]')]
-    const submission = activeBoxes.reduce((word, box) => box.dataset.letter + word, "")
-    console.log(dictionary.includes(submission))
+    blockInput()
+    const activeBoxes = getActiveBoxes()
+    if (activeBoxes.length < 5) {
+        console.log("Not enough letters")
+        allowInput()
+        return
+    }
+
+    const submission = activeBoxes.reduce((word, box) => word + box.dataset.letter, "")
+    if (dictionary && !dictionary.includes(submission)) {
+        console.log("Unknown word")
+        allowInput()
+        return
+    }
+
+    activeBoxes.forEach(box => {
+        box.classList.remove('active')
+        box.classList.add('submitted')
+    })
+    allowInput()
 }
