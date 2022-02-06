@@ -47,6 +47,12 @@ body{
 #letter-board > .box.active{
     border: var(--board-box-active-border);
 }
+#letter-board > .box.present{
+    background-color: #b59f3b;
+}
+#letter-board > .box.correct{
+    background-color: #538d4e;
+}
 
 #keyboard{
     width: 100%;

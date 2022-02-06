@@ -83,6 +83,17 @@ function processSubmit() {
         return
     }
 
+    const todaysWord = targetWords[6]
+    console.log(todaysWord, submission)
+    activeBoxes.forEach((box, index) => {
+        if (todaysWord[index] === box.textContent) {
+            activeBoxes[index].classList.add('correct')
+        }
+        else if (todaysWord.includes(box.textContent)) {
+            activeBoxes[index].classList.add('present')
+        }
+    })
+
     activeBoxes.forEach(box => {
         box.classList.remove('active')
         box.classList.add('submitted')
