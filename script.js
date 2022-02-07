@@ -63,6 +63,7 @@ const createAlert = (alert, duration = 1000) => {
     }, duration)
 }
 
+// process input letters to show in UI
 function processInput(key) {
     const activeBoxes = getActiveBoxes()
     if (key === "Enter") {
@@ -82,18 +83,20 @@ function processInput(key) {
     }
 }
 
+// clear letter box
 function processDelete() {
-    const filledBoxes = [...board.querySelectorAll('[data-state="active"]')]
-    if (filledBoxes.length === 0) return
-    const lastBox = filledBoxes.pop()
+    const activeBoxes = getActiveBoxes()
+    if (activeBoxes.length === 0) return
+    const lastBox = activeBoxes.pop()
     lastBox.textContent = ""
     lastBox.dataset.state = 'empty'
     delete lastBox.dataset.letter
 }
 
-function processSubmit() {
+// check the user's submission
+function processSubmit(boxes) {
     blockInput()
-    const activeBoxes = getActiveBoxes()
+    const activeBoxes = boxes || getActiveBoxes()
     if (activeBoxes.length < 5) {
         createAlert("Not enough letters")
         allowInput()
@@ -107,11 +110,12 @@ function processSubmit() {
         return
     }
 
+    saveToLocalStorage()
     activeBoxes.forEach((box, index) => {
         setTimeout(() => {
             setBoxAnimationState(box, 'flip-in')
 
-            setTimeout(() => {
+            box.addEventListener('animationend', () => {
                 // add state by checking the letter of previous box
                 if (todaysWord[index] === box.textContent) {
                     box.dataset.state = 'correct'
@@ -126,7 +130,7 @@ function processSubmit() {
                 }
 
                 setBoxAnimationState(box, 'flip-out')
-                setTimeout(() => setBoxAnimationState(box, 'idle'), FLIP_DURATION / 2)
+                box.addEventListener('animationend', () => setBoxAnimationState(box, 'idle'), { once: true })
 
 
                 // check win or lose
@@ -149,8 +153,34 @@ function processSubmit() {
                         allowInput()
                     }
                 }
-            }, FLIP_DURATION / 2)
+            }, { once: true })
 
         }, FLIP_DURATION * (index + 1) / 2)
     })
+}
+
+// get data from local storage
+getFromLocalStorage()
+function getFromLocalStorage() {
+    const savedData = localStorage.getItem('user-data')
+    if (!savedData) return
+    const { letters } = JSON.parse(savedData)
+    letters.forEach(letter => {
+        const nextBox = getEmptyBoxes()[0]
+        if (!nextBox) return
+        nextBox.textContent = letter
+        nextBox.dataset.letter = letter
+        nextBox.dataset.state = 'active'
+    })
+    for (let i = 0; i <= (letters.length - 5); i++) {
+        i % 5 || processSubmit(getActiveBoxes().slice(i, i + 5))
+    }
+}
+
+// save data to local storage
+function saveToLocalStorage() {
+    const filledBoxes = [...board.querySelectorAll(':not(.box[data-state="empty"])')]
+    const letters = filledBoxes.map(box => box.dataset.letter)
+    const newData = { letters }
+    localStorage.setItem('user-data', JSON.stringify(newData))
 }
