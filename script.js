@@ -146,7 +146,7 @@ function processSubmit(boxes) {
                         })
                     }
                     else if (getEmptyBoxes().length === 0) {
-                        createAlert(`Today's word is "${todaysWord}"`, 5000)
+                        createAlert(`Today's word is "${todaysWord.toUpperCase()}"`, 5000)
                     }
                     else {
                         // allow user input after animation ends
