@@ -3,10 +3,17 @@
 }
 
 :root{
-    --background-color: black;
+    --primary-color: rgb(15, 15, 15);
+    --secondary-color: rgb(44, 44, 44);
+    --color-gray: rgb(40, 40, 40);
+    --dark-gray: rgb(51, 51, 51);
+    --light-gray: rgb(62, 62, 62);
+    --background-color: var(--primary-color);
     --keyboard-button-color: rgb(93, 93, 93);
-    --board-box-border: 1px solid rgb(41, 41, 41);
-    --board-box-active-border: 2px solid rgb(62, 62, 62);
+    --board-box-border: 1px solid var(--dark-gray);
+    --board-box-active-border: 2px solid var(--light-gray);
+    --correct-color: #538d4e;
+    --present-color: #b59f3b;
     font-size: 10px;
 }
 
@@ -37,21 +44,37 @@ body{
 #letter-board > .box{
     text-transform: uppercase;
     font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans', sans-serif;
-    font-size: clamp(2rem, 7vw, 4rem);
+    font-size: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     border: var(--board-box-border);
     border-radius: 0.3rem;
+    transform: scale(0.9);
+    transition: font-size 100ms step-end, transform 100ms cubic-bezier(0.8, 1.37, 0.78, 5);
 }
 #letter-board > .box.active{
+    font-size: clamp(2rem, 7vw, 4rem);
+    transform: scale(1);
     border: var(--board-box-active-border);
 }
+#letter-board > .box.submitted{
+    font-size: clamp(2rem, 7vw, 4rem);
+    transform: scale(1);
+    background-color: var(--color-gray);
+}
+#letter-board > .box.flip{
+    animation: flip 500ms ease-in-out;
+}
+@keyframes flip {
+    50%{ transform: rotateX(90deg);}
+    100%{ transform: rotateX(0deg);}
+}
 #letter-board > .box.present{
-    background-color: #b59f3b;
+    background-color: var(--present-color);
 }
 #letter-board > .box.correct{
-    background-color: #538d4e;
+    background-color: var(--correct-color);
 }
 
 #keyboard{
@@ -83,4 +106,10 @@ body{
 }
 #keyboard > .row > .key:hover{
     transform: scale(1.08);
+}
+#keyboard > .row > .key.present{
+    background-color: var(--present-color);
+}
+#keyboard > .row > .key.correct{
+    background-color: var(--correct-color);
 }

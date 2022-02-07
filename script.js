@@ -2,6 +2,8 @@
 const board = document.getElementById('letter-board')
 const keyboard = document.getElementById('keyboard')
 
+const FLIP_DURATION = 500
+
 // get dictionary words from json file
 let dictionary
 getDictionary()
@@ -36,6 +38,7 @@ function processKeyboardType(e) {
     (e.key.match(/^[a-z]$/) || e.key === "Enter" || e.key === "Backspace") && processInput(e.key)
 }
 function processMouseClick(e) {
+    console.log(e)
     e.target.dataset.key && processInput(e.target.dataset.key)
 }
 
@@ -83,20 +86,28 @@ function processSubmit() {
         return
     }
 
+
     const todaysWord = targetWords[6]
     console.log(todaysWord, submission)
     activeBoxes.forEach((box, index) => {
-        if (todaysWord[index] === box.textContent) {
-            activeBoxes[index].classList.add('correct')
-        }
-        else if (todaysWord.includes(box.textContent)) {
-            activeBoxes[index].classList.add('present')
-        }
+        setTimeout(() => {
+            box.classList.remove('active')
+            box.classList.add('submitted')
+            box.classList.add('flip')
+            setTimeout(() => box.classList.remove('flip'), FLIP_DURATION * 1.5)
+
+            // add state by checking the letter of previous box
+            if (index < 1) return
+            if (todaysWord[index - 1] === activeBoxes[index - 1].textContent) {
+                activeBoxes[index - 1].classList.add('correct')
+                keyboard.querySelector(`[data-key="${todaysWord[index - 1]}"]`).classList.add('correct')
+            }
+            else if (todaysWord.includes(activeBoxes[index - 1].textContent)) {
+                activeBoxes[index - 1].classList.add('present')
+                keyboard.querySelector(`[data-key="${activeBoxes[index - 1].textContent}"]`).classList.add('present')
+            }
+        }, FLIP_DURATION * (index + 1) / 2)
     })
 
-    activeBoxes.forEach(box => {
-        box.classList.remove('active')
-        box.classList.add('submitted')
-    })
     allowInput()
 }
