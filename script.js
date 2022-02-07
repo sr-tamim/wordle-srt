@@ -1,4 +1,7 @@
 
+// define some congrats wishes for winners
+const allWishes = ['Magnificent', 'Spectacular', 'Impressive', 'Splendicious', 'Skilful', 'Splendid', 'Marvellous', 'Brilliant', 'Excellent']
+
 // constant variables
 const board = document.getElementById('letter-board')
 const keyboard = document.getElementById('keyboard')
@@ -129,7 +132,8 @@ function processSubmit() {
                 // check win or lose
                 if (index === activeBoxes.length - 1) {
                     if ((activeBoxes.filter(box => box.dataset.state === 'correct')).length === 5) {
-                        createAlert('You Win', 5000)
+                        createAlert(allWishes[Math.round(Math.random() * (allWishes.length - 1))], 5000)
+
                         activeBoxes.forEach((box, i) => {
                             setTimeout(() => {
                                 box.dataset.animation = "bounce"
