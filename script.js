@@ -19,8 +19,8 @@ const POP_DURATION = 100
 let dictionary, todaysWord
 loadAllData()
 async function loadAllData() {
-    const getDictionary = await fetch('/dictionary.json')
-    const getAllWords = await fetch('/targetWords.json')
+    const getDictionary = await fetch('/wordle-srt/dictionary.json')
+    const getAllWords = await fetch('/wordle-srt/targetWords.json')
     dictionary = await getDictionary.json()
     allWords = await getAllWords.json()
     todaysWord = allWords[dayIndex]
