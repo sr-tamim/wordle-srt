@@ -10,7 +10,6 @@ const dayIndex = Math.floor((today - releaseDate.valueOf()) / (1000 * 60 * 60 * 
 // animation durations
 const FLIP_DURATION = 500
 const POP_DURATION = 100
-const ALERT_DURATION = 1000
 
 
 // get all data from json file
@@ -40,11 +39,16 @@ function processKeyboardType(e) {
 }
 function processMouseClick(e) {
     e.target.dataset.key && processInput(e.target.dataset.key)
+    if (e.target.tagName === "BUTTON") {
+        e.target.dataset.animation = 'pop'
+        setTimeout(() => delete e.target.dataset.animation, POP_DURATION)
+    }
 }
 
 const getActiveBoxes = () => [...board.querySelectorAll('.box[data-state="active"]')]
+const getEmptyBoxes = () => [...board.querySelectorAll('.box[data-state="empty"]')]
 const setBoxAnimationState = (box, state) => box.dataset.animation = state
-const createAlert = (alert) => {
+const createAlert = (alert, duration = 1000) => {
     const container = document.getElementById('alerts-container')
     const div = document.createElement('div')
     div.classList.add('alert')
@@ -53,7 +57,7 @@ const createAlert = (alert) => {
     setTimeout(() => {
         div.dataset.animation = 'fade-out'
         div.addEventListener('animationend', () => container.removeChild(div), { once: true })
-    }, ALERT_DURATION)
+    }, duration)
 }
 
 function processInput(key) {
@@ -65,7 +69,8 @@ function processInput(key) {
         processDelete()
         return
     } else if (activeBoxes.length < 5) {
-        const nextBox = board.querySelector(':not([data-letter])')
+        const nextBox = getEmptyBoxes()[0]
+        if (!nextBox) return
         nextBox.textContent = key
         nextBox.dataset.letter = key
         nextBox.dataset.state = 'active'
@@ -120,11 +125,23 @@ function processSubmit() {
                 setBoxAnimationState(box, 'flip-out')
                 setTimeout(() => setBoxAnimationState(box, 'idle'), FLIP_DURATION / 2)
 
-                // allow user input after animation ends
-                index === activeBoxes.length - 1 && allowInput()
+
+                // check win or lose
+                if (index === activeBoxes.length - 1) {
+                    if ((activeBoxes.filter(box => box.dataset.state === 'correct')).length === 5) {
+                        createAlert('You Win', 5000)
+                        blockInput()
+                    }
+                    else if (getEmptyBoxes().length === 0) {
+                        createAlert('You Lost', 5000)
+                    }
+                    else {
+                        // allow user input after animation ends
+                        allowInput()
+                    }
+                }
             }, FLIP_DURATION / 2)
 
         }, FLIP_DURATION * (index + 1) / 2)
-
     })
 }
