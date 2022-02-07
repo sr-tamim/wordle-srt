@@ -14,80 +14,83 @@
 </head>
 
 <body>
-    <div id="letter-board">
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-    </div>
-    <div id="keyboard">
-        <div class="row">
-            <span class="key" data-key="q">q</span>
-            <span class="key" data-key="w">w</span>
-            <span class="key" data-key="e">e</span>
-            <span class="key" data-key="r">r</span>
-            <span class="key" data-key="t">t</span>
-            <span class="key" data-key="y">y</span>
-            <span class="key" data-key="u">u</span>
-            <span class="key" data-key="i">i</span>
-            <span class="key" data-key="o">o</span>
-            <span class="key" data-key="p">p</span>
+    <main>
+        <div id="letter-board">
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
+            <div class="box" data-state="empty" data-animation="idle"></div>
         </div>
-        <div class="row">
-            <span class="key" data-key="a">a</span>
-            <span class="key" data-key="s">s</span>
-            <span class="key" data-key="d">d</span>
-            <span class="key" data-key="f">f</span>
-            <span class="key" data-key="g">g</span>
-            <span class="key" data-key="h">h</span>
-            <span class="key" data-key="j">j</span>
-            <span class="key" data-key="k">k</span>
-            <span class="key" data-key="l">l</span>
+        <div id="keyboard">
+            <div class="row">
+                <span class="key" data-key="q">q</span>
+                <span class="key" data-key="w">w</span>
+                <span class="key" data-key="e">e</span>
+                <span class="key" data-key="r">r</span>
+                <span class="key" data-key="t">t</span>
+                <span class="key" data-key="y">y</span>
+                <span class="key" data-key="u">u</span>
+                <span class="key" data-key="i">i</span>
+                <span class="key" data-key="o">o</span>
+                <span class="key" data-key="p">p</span>
+            </div>
+            <div class="row">
+                <span class="key" data-key="a">a</span>
+                <span class="key" data-key="s">s</span>
+                <span class="key" data-key="d">d</span>
+                <span class="key" data-key="f">f</span>
+                <span class="key" data-key="g">g</span>
+                <span class="key" data-key="h">h</span>
+                <span class="key" data-key="j">j</span>
+                <span class="key" data-key="k">k</span>
+                <span class="key" data-key="l">l</span>
+            </div>
+            <div class="row">
+                <span class="key" data-key="Enter">Enter</span>
+                <span class="key" data-key="z">z</span>
+                <span class="key" data-key="x">x</span>
+                <span class="key" data-key="c">c</span>
+                <span class="key" data-key="v">v</span>
+                <span class="key" data-key="b">b</span>
+                <span class="key" data-key="n">n</span>
+                <span class="key" data-key="m">m</span>
+                <span class="key" data-key="Backspace">
+                    <svg data-key="Backspace" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24"
+                        width="20">
+                        <path fill="white" data-key="Backspace"
+                            d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z">
+                        </path>
+                    </svg>
+                </span>
+            </div>
         </div>
-        <div class="row">
-            <span class="key" data-key="Enter">Enter</span>
-            <span class="key" data-key="z">z</span>
-            <span class="key" data-key="x">x</span>
-            <span class="key" data-key="c">c</span>
-            <span class="key" data-key="v">v</span>
-            <span class="key" data-key="b">b</span>
-            <span class="key" data-key="n">n</span>
-            <span class="key" data-key="m">m</span>
-            <span class="key" data-key="Backspace">
-                <svg data-key="Backspace" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20">
-                    <path fill="white" data-key="Backspace"
-                        d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z">
-                    </path>
-                </svg>
-            </span>
-        </div>
-    </div>
+    </main>
 </body>
 
 </html>

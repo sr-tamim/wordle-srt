@@ -25,11 +25,15 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
+    margin: 0;
+}
+main{
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: stretch;
     align-items: center;
-    margin: 0;
     padding: 1rem;
 }
 
@@ -40,41 +44,51 @@ body{
     grid-template-columns: repeat(5, clamp(3rem, 12vw, 6rem));
     grid-template-rows: repeat(6, clamp(3rem, 12vw, 6rem));
     grid-gap: 0.7rem;
+    align-content: center;
 }
 #letter-board > .box{
     text-transform: uppercase;
     font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans', sans-serif;
-    font-size: 0;
+    font-size: clamp(2rem, 7vw, 4rem);
     display: flex;
     justify-content: center;
     align-items: center;
     border: var(--board-box-border);
     border-radius: 0.3rem;
-    transform: scale(0.9);
-    transition: font-size 100ms step-end, transform 100ms cubic-bezier(0.8, 1.37, 0.78, 5);
+    transition: background 50ms ease;
 }
-#letter-board > .box.active{
-    font-size: clamp(2rem, 7vw, 4rem);
-    transform: scale(1);
-    border: var(--board-box-active-border);
-}
-#letter-board > .box.submitted{
-    font-size: clamp(2rem, 7vw, 4rem);
-    transform: scale(1);
-    background-color: var(--color-gray);
-}
-#letter-board > .box.flip{
-    animation: flip 500ms ease-in-out;
-}
-@keyframes flip {
-    50%{ transform: rotateX(90deg);}
-    100%{ transform: rotateX(0deg);}
-}
-#letter-board > .box.present{
+#letter-board > [data-state="present"]{
     background-color: var(--present-color);
 }
-#letter-board > .box.correct{
+#letter-board > [data-state="correct"]{
     background-color: var(--correct-color);
+}
+#letter-board > [data-state="wrong"]{
+    background-color: var(--color-gray);
+}
+#letter-board > [data-state="active"]{
+    border: var(--board-box-active-border);
+}
+#letter-board > [data-animation="pop"]{
+    animation: Pop 100ms;
+}
+#letter-board > [data-animation="flip-in"]{
+    animation: flipIn 250ms ease-in;
+}
+#letter-board > [data-animation="flip-out"]{
+    animation: flipOut 250ms ease-in;
+}
+@keyframes Pop {
+    from{ transform: scale(0.8); opacity: 0;}
+    40%{ transform: scale(1.1); opacity: 1;}
+}
+@keyframes flipIn {
+    0%{ transform: rotateX(0deg);}
+    100%{ transform: rotateX(-90deg);}
+}
+@keyframes flipOut {
+    0%{ transform: rotateX(-90deg);}
+    100%{ transform: rotateX(0deg);}
 }
 
 #keyboard{

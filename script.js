@@ -1,30 +1,30 @@
 
+// constant variables
 const board = document.getElementById('letter-board')
 const keyboard = document.getElementById('keyboard')
 
+const releaseDate = new Date(2022, 1, 6)
+const today = Date.now()
+const dayIndex = Math.floor((today - releaseDate.valueOf()) / (1000 * 60 * 60 * 24))
+
+// animation durations
 const FLIP_DURATION = 500
+const POP_DURATION = 100
 
-// get dictionary words from json file
-let dictionary
-getDictionary()
-async function getDictionary() {
-    const res = await fetch('/dictionary.json')
-    const result = await res.json()
-    console.log('Dictionary loaded')
-    dictionary = result
+
+// get all data from json file
+let dictionary, todaysWord
+loadAllData()
+async function loadAllData() {
+    const getDictionary = await fetch('/dictionary.json')
+    const getAllWords = await fetch('/targetWords.json')
+    dictionary = await getDictionary.json()
+    allWords = await getAllWords.json()
+    todaysWord = allWords[dayIndex]
+    allowInput()
 }
 
-// get targetWords from json file
-let targetWords
-getTargetWords()
-async function getTargetWords() {
-    const res = await fetch('/targetWords.json')
-    const result = await res.json()
-    console.log('target words loaded')
-    targetWords = result
-}
 
-allowInput()
 function allowInput() {
     keyboard.addEventListener('click', processMouseClick)
     document.addEventListener('keyup', processKeyboardType)
@@ -42,10 +42,10 @@ function processMouseClick(e) {
     e.target.dataset.key && processInput(e.target.dataset.key)
 }
 
-function getActiveBoxes() { return [...board.querySelectorAll('.box.active')] }
+const getActiveBoxes = () => [...board.querySelectorAll('.box[data-state="active"]')]
+const setBoxAnimationState = (box, state) => box.dataset.animation = state
 
 function processInput(key) {
-    console.log(key)
     const activeBoxes = getActiveBoxes()
     if (key === "Enter") {
         processSubmit()
@@ -54,20 +54,22 @@ function processInput(key) {
         processDelete()
         return
     } else if (activeBoxes.length < 5) {
-        const emptyBox = board.querySelector(':not([data-letter])')
-        emptyBox.textContent = key
-        emptyBox.dataset.letter = key
-        emptyBox.classList.add('active')
+        const nextBox = board.querySelector(':not([data-letter])')
+        nextBox.textContent = key
+        nextBox.dataset.letter = key
+        nextBox.dataset.state = 'active'
+        setBoxAnimationState(nextBox, 'pop')
+        setTimeout(() => setBoxAnimationState(nextBox, 'idle'), POP_DURATION)
     }
 }
 
 function processDelete() {
-    const activeBoxes = getActiveBoxes()
-    if (activeBoxes.length === 0) return
-    const lastBox = activeBoxes.pop()
+    const filledBoxes = [...board.querySelectorAll(':not([data-state="empty"])')]
+    if (filledBoxes.length === 0) return
+    const lastBox = filledBoxes.pop()
     lastBox.textContent = ""
+    lastBox.dataset.state = 'empty'
     delete lastBox.dataset.letter
-    lastBox.classList.remove('active')
 }
 
 function processSubmit() {
@@ -86,27 +88,30 @@ function processSubmit() {
         return
     }
 
-
-    const todaysWord = targetWords[6]
-    console.log(todaysWord, submission)
     activeBoxes.forEach((box, index) => {
         setTimeout(() => {
-            box.classList.remove('active')
-            box.classList.add('submitted')
-            box.classList.add('flip')
-            setTimeout(() => box.classList.remove('flip'), FLIP_DURATION * 1.5)
+            setBoxAnimationState(box, 'flip-in')
 
-            // add state by checking the letter of previous box
-            if (index < 1) return
-            if (todaysWord[index - 1] === activeBoxes[index - 1].textContent) {
-                activeBoxes[index - 1].classList.add('correct')
-                keyboard.querySelector(`[data-key="${todaysWord[index - 1]}"]`).classList.add('correct')
-            }
-            else if (todaysWord.includes(activeBoxes[index - 1].textContent)) {
-                activeBoxes[index - 1].classList.add('present')
-                keyboard.querySelector(`[data-key="${activeBoxes[index - 1].textContent}"]`).classList.add('present')
-            }
+            setTimeout(() => {
+                // add state by checking the letter of previous box
+                if (todaysWord[index] === box.textContent) {
+                    box.dataset.state = 'correct'
+                    keyboard.querySelector(`[data-key="${todaysWord[index]}"]`).dataset.state = 'correct'
+                }
+                else if (todaysWord.includes(box.textContent)) {
+                    box.dataset.state = 'present'
+                    keyboard.querySelector(`[data-key="${box.textContent}"]`).dataset.state = 'present'
+                } else {
+                    box.dataset.state = 'wrong'
+                    keyboard.querySelector(`[data-key="${box.textContent}"]`).dataset.state = 'wrong'
+                }
+
+                setBoxAnimationState(box, 'flip-out')
+                setTimeout(() => setBoxAnimationState(box, 'idle'), FLIP_DURATION / 2)
+            }, FLIP_DURATION / 2)
+
         }, FLIP_DURATION * (index + 1) / 2)
+
     })
 
     allowInput()
