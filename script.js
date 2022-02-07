@@ -146,7 +146,7 @@ function processSubmit(boxes) {
                         })
                     }
                     else if (getEmptyBoxes().length === 0) {
-                        createAlert('You Lost', 5000)
+                        createAlert(`Today's word is "${todaysWord}"`, 5000)
                     }
                     else {
                         // allow user input after animation ends
