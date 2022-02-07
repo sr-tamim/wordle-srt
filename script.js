@@ -10,6 +10,7 @@ const dayIndex = Math.floor((today - releaseDate.valueOf()) / (1000 * 60 * 60 * 
 // animation durations
 const FLIP_DURATION = 500
 const POP_DURATION = 100
+const ALERT_DURATION = 1000
 
 
 // get all data from json file
@@ -38,12 +39,22 @@ function processKeyboardType(e) {
     (e.key.match(/^[a-z]$/) || e.key === "Enter" || e.key === "Backspace") && processInput(e.key)
 }
 function processMouseClick(e) {
-    console.log(e)
     e.target.dataset.key && processInput(e.target.dataset.key)
 }
 
 const getActiveBoxes = () => [...board.querySelectorAll('.box[data-state="active"]')]
 const setBoxAnimationState = (box, state) => box.dataset.animation = state
+const createAlert = (alert) => {
+    const container = document.getElementById('alerts-container')
+    const div = document.createElement('div')
+    div.classList.add('alert')
+    div.textContent = alert
+    container.prepend(div)
+    setTimeout(() => {
+        div.dataset.animation = 'fade-out'
+        div.addEventListener('animationend', () => container.removeChild(div), { once: true })
+    }, ALERT_DURATION)
+}
 
 function processInput(key) {
     const activeBoxes = getActiveBoxes()
@@ -64,7 +75,7 @@ function processInput(key) {
 }
 
 function processDelete() {
-    const filledBoxes = [...board.querySelectorAll(':not([data-state="empty"])')]
+    const filledBoxes = [...board.querySelectorAll('[data-state="active"]')]
     if (filledBoxes.length === 0) return
     const lastBox = filledBoxes.pop()
     lastBox.textContent = ""
@@ -76,14 +87,14 @@ function processSubmit() {
     blockInput()
     const activeBoxes = getActiveBoxes()
     if (activeBoxes.length < 5) {
-        console.log("Not enough letters")
+        createAlert("Not enough letters")
         allowInput()
         return
     }
 
     const submission = activeBoxes.reduce((word, box) => word + box.dataset.letter, "")
     if (dictionary && !dictionary.includes(submission)) {
-        console.log("Unknown word")
+        createAlert("Unknown word")
         allowInput()
         return
     }
@@ -108,11 +119,12 @@ function processSubmit() {
 
                 setBoxAnimationState(box, 'flip-out')
                 setTimeout(() => setBoxAnimationState(box, 'idle'), FLIP_DURATION / 2)
+
+                // allow user input after animation ends
+                index === activeBoxes.length - 1 && allowInput()
             }, FLIP_DURATION / 2)
 
         }, FLIP_DURATION * (index + 1) / 2)
 
     })
-
-    allowInput()
 }

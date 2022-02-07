@@ -3,11 +3,12 @@
 }
 
 :root{
-    --primary-color: rgb(15, 15, 15);
+    --primary-color: rgb(25, 25, 25);
     --secondary-color: rgb(44, 44, 44);
     --color-gray: rgb(40, 40, 40);
     --dark-gray: rgb(51, 51, 51);
     --light-gray: rgb(62, 62, 62);
+    --primary-text-color: white;
     --background-color: var(--primary-color);
     --keyboard-button-color: rgb(93, 93, 93);
     --board-box-border: 1px solid var(--dark-gray);
@@ -19,7 +20,7 @@
 
 body{
     background-color: var(--background-color);
-    color: white;
+    color: var(--primary-text-color);
     position: absolute;
     top: 0;
     left: 0;
@@ -57,26 +58,85 @@ main{
     border-radius: 0.3rem;
     transition: background 50ms ease;
 }
-#letter-board > [data-state="present"]{
-    background-color: var(--present-color);
-}
-#letter-board > [data-state="correct"]{
-    background-color: var(--correct-color);
-}
-#letter-board > [data-state="wrong"]{
-    background-color: var(--color-gray);
-}
 #letter-board > [data-state="active"]{
     border: var(--board-box-active-border);
 }
-#letter-board > [data-animation="pop"]{
+
+
+#keyboard{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    justify-items: center;
+    padding: clamp(2rem, 10vh, 4rem);
+}
+#keyboard > .row{
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    justify-content: center;
+}
+button{
+    text-transform: uppercase;
+    color: var(--primary-text-color);
+    font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    background-color: var(--keyboard-button-color);
+    padding: clamp(0.4rem, 1vh, 1.1rem) clamp(0.6rem, 2vw, 1.1rem);
+    margin: 0.5rem clamp(0.2rem, 1vw, 1rem);
+    border: 0;
+    border-radius: 0.5rem;
+    transition: transform 100ms step-start, background 500ms;
+    cursor: pointer;
+    user-select: none;
+}
+button:hover{
+    transform: scale(1.08);
+}
+
+
+[data-state="present"]{
+    background-color: var(--present-color);
+}
+[data-state="correct"]{
+    background-color: var(--correct-color);
+}
+[data-state="wrong"]{
+    background-color: var(--color-gray);
+}
+
+
+#alerts-container{
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans', sans-serif;
+}
+#alerts-container > .alert{
+    background-color: var(--dark-gray);
+    padding: clamp(0.5rem, 1.2vw, 1.5rem) clamp(1rem, 2vw, 2.5rem);
+    margin: clamp(2rem, 2vw, 4rem) 0;
+}
+
+
+[data-animation="fade-out"]{
+    animation: fadeOut 800ms ease-out;
+}
+[data-animation="pop"]{
     animation: Pop 100ms;
 }
-#letter-board > [data-animation="flip-in"]{
+[data-animation="flip-in"]{
     animation: flipIn 250ms ease-in;
 }
-#letter-board > [data-animation="flip-out"]{
+[data-animation="flip-out"]{
     animation: flipOut 250ms ease-in;
+}
+
+@keyframes fadeOut {
+    from{ opacity: 1;}
+    to{ opacity: 0;}
 }
 @keyframes Pop {
     from{ transform: scale(0.8); opacity: 0;}
@@ -89,41 +149,4 @@ main{
 @keyframes flipOut {
     0%{ transform: rotateX(-90deg);}
     100%{ transform: rotateX(0deg);}
-}
-
-#keyboard{
-    width: 100%;
-    display: grid;
-    grid-template-columns: 100%;
-    justify-items: center;
-    padding: clamp(2rem, 10vh, 4rem);
-}
-
-#keyboard > .row{
-    width: 100%;
-    max-width: 700px;
-    display: flex;
-    justify-content: center;
-}
-
-#keyboard > .row > .key{
-    text-transform: uppercase;
-    font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans', sans-serif;
-    font-size: clamp(1.8rem, 5vw, 2.5rem);
-    background-color: var(--keyboard-button-color);
-    padding: clamp(0.4rem, 1vh, 1.1rem) clamp(0.6rem, 2vw, 1.1rem);
-    margin: 0.5rem clamp(0.2rem, 1vw, 1rem);
-    border-radius: 0.5rem;
-    transition: transform 100ms step-start;
-    cursor: pointer;
-    user-select: none;
-}
-#keyboard > .row > .key:hover{
-    transform: scale(1.08);
-}
-#keyboard > .row > .key.present{
-    background-color: var(--present-color);
-}
-#keyboard > .row > .key.correct{
-    background-color: var(--correct-color);
 }
