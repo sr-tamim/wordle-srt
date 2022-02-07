@@ -130,7 +130,12 @@ function processSubmit() {
                 if (index === activeBoxes.length - 1) {
                     if ((activeBoxes.filter(box => box.dataset.state === 'correct')).length === 5) {
                         createAlert('You Win', 5000)
-                        blockInput()
+                        activeBoxes.forEach((box, i) => {
+                            setTimeout(() => {
+                                box.dataset.animation = "bounce"
+                                setTimeout(() => activeBoxes.forEach(box => box.dataset.animation = "idle"), 1000)
+                            }, 100 * i)
+                        })
                     }
                     else if (getEmptyBoxes().length === 0) {
                         createAlert('You Lost', 5000)
