@@ -13,6 +13,9 @@ const dayIndex = Math.floor((today - releaseDate.valueOf()) / (1000 * 60 * 60 * 
 // animation durations
 const FLIP_DURATION = 500
 const POP_DURATION = 100
+const FADE_DURATION = 500
+const SHAKE_DURATION = 600
+const BOUNCE_DURATION = 1000
 
 
 // get all data from json file
@@ -53,6 +56,7 @@ const getEmptyBoxes = () => [...board.querySelectorAll('.box[data-state="empty"]
 const setBoxAnimationState = (box, state) => box.dataset.animation = state
 const createAlert = (alert, duration = 1000) => {
     const container = document.getElementById('alerts-container')
+    container.style.display = 'block'
     const div = document.createElement('div')
     div.classList.add('alert')
     div.textContent = alert
@@ -94,24 +98,27 @@ function processDelete() {
 }
 
 // check the user's submission
-function processSubmit(boxes, checkWinner = true) {
+function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
     blockInput()
-    const activeBoxes = boxes || getActiveBoxes()
-    if (activeBoxes.length < 5) {
+    if (boxes.length < 5) {
         createAlert("Not enough letters")
         allowInput()
         return
     }
 
-    const submission = activeBoxes.reduce((word, box) => word + box.dataset.letter, "")
+    const submission = boxes.reduce((word, box) => word + box.dataset.letter, "")
     if (dictionary && !dictionary.includes(submission)) {
         createAlert("Unknown word")
+        boxes.forEach((box, i) => {
+            box.dataset.animation = "shake"
+            setTimeout(() => boxes.forEach(box => box.dataset.animation = "idle"), SHAKE_DURATION)
+        })
         allowInput()
         return
     }
 
     checkWinner && saveToLocalStorage()
-    activeBoxes.forEach((box, index) => {
+    boxes.forEach((box, index) => {
         setTimeout(() => {
             setBoxAnimationState(box, 'flip-in')
 
@@ -134,14 +141,14 @@ function processSubmit(boxes, checkWinner = true) {
 
 
                 // check win or lose
-                if (checkWinner && index === activeBoxes.length - 1) {
-                    if ((activeBoxes.filter(box => box.dataset.state === 'correct')).length === 5) {
+                if (checkWinner && index === boxes.length - 1) {
+                    if ((boxes.filter(box => box.dataset.state === 'correct')).length === 5) {
                         createAlert(allWishes[Math.round(Math.random() * (allWishes.length - 1))], 5000)
 
-                        activeBoxes.forEach((box, i) => {
+                        boxes.forEach((box, i) => {
                             setTimeout(() => {
                                 box.dataset.animation = "bounce"
-                                setTimeout(() => activeBoxes.forEach(box => box.dataset.animation = "idle"), 1000)
+                                setTimeout(() => boxes.forEach(box => box.dataset.animation = "idle"), BOUNCE_DURATION)
                             }, 100 * i)
                         })
                     }
@@ -192,3 +199,16 @@ function saveToLocalStorage() {
     const newData = { letters, date }
     localStorage.setItem('user-data', JSON.stringify(newData))
 }
+
+
+// modal close listener
+const modal = document.getElementById('modal-container')
+
+
+modal.style.display === 'none' || modal.addEventListener('click', () => {
+    modal.dataset.animation = 'fade-out'
+    setTimeout(() => {
+        modal.style.display = 'none'
+        modal.lastChild && modal.removeChild(modal.lastChild)
+    }, FADE_DURATION)
+}, { once: true })
