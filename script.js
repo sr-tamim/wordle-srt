@@ -94,7 +94,7 @@ function processDelete() {
 }
 
 // check the user's submission
-function processSubmit(boxes) {
+function processSubmit(boxes, checkWinner = true) {
     blockInput()
     const activeBoxes = boxes || getActiveBoxes()
     if (activeBoxes.length < 5) {
@@ -110,7 +110,7 @@ function processSubmit(boxes) {
         return
     }
 
-    saveToLocalStorage()
+    checkWinner && saveToLocalStorage()
     activeBoxes.forEach((box, index) => {
         setTimeout(() => {
             setBoxAnimationState(box, 'flip-in')
@@ -134,7 +134,7 @@ function processSubmit(boxes) {
 
 
                 // check win or lose
-                if (index === activeBoxes.length - 1) {
+                if (checkWinner && index === activeBoxes.length - 1) {
                     if ((activeBoxes.filter(box => box.dataset.state === 'correct')).length === 5) {
                         createAlert(allWishes[Math.round(Math.random() * (allWishes.length - 1))], 5000)
 
@@ -162,9 +162,16 @@ function processSubmit(boxes) {
 // get data from local storage
 getFromLocalStorage()
 function getFromLocalStorage() {
-    const savedData = localStorage.getItem('user-data')
+    const savedData = JSON.parse(localStorage.getItem('user-data'))
+
     if (!savedData) return
-    const { letters } = JSON.parse(savedData)
+
+    const { letters } = savedData
+    const previousDate = new Date(savedData.date)
+    const currentDate = new Date()
+
+    if (currentDate.getDate() !== previousDate.getDate()) return
+
     letters.forEach(letter => {
         const nextBox = getEmptyBoxes()[0]
         if (!nextBox) return
@@ -173,7 +180,7 @@ function getFromLocalStorage() {
         nextBox.dataset.state = 'active'
     })
     for (let i = 0; i <= (letters.length - 5); i++) {
-        i % 5 || processSubmit(getActiveBoxes().slice(i, i + 5))
+        i % 5 || processSubmit(getActiveBoxes().slice(i, i + 5), false)
     }
 }
 
@@ -181,6 +188,7 @@ function getFromLocalStorage() {
 function saveToLocalStorage() {
     const filledBoxes = [...board.querySelectorAll(':not(.box[data-state="empty"])')]
     const letters = filledBoxes.map(box => box.dataset.letter)
-    const newData = { letters }
+    const date = Date.now()
+    const newData = { letters, date }
     localStorage.setItem('user-data', JSON.stringify(newData))
 }
