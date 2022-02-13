@@ -36,6 +36,8 @@ function showInstructions() {
             <div class="box">e</div>
         </div>
         <p>The letter <b>U</b> is not in the word in any spot.</p>
+        <hr>
+        <h2>A new WORDLE will be available each day!</h2>
     </p>`
 
     container.innerHTML = instructions
