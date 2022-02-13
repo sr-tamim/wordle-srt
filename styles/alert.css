@@ -1,0 +1,19 @@
+
+#alerts-container{
+    display: none;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    z-index: 50;
+}
+#alerts-container > .alert{
+    color: black;
+    background-color: whitesmoke;
+    font-weight: bold;
+    letter-spacing: 0.1rem;
+    padding: clamp(0.5rem, 1.2vw, 1.5rem) clamp(1rem, 2vw, 2.5rem);
+    margin: clamp(2rem, 2vw, 4rem) 0;
+    border-radius: 0.5rem;
+}
