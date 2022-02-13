@@ -13,6 +13,17 @@ function revealSettings() {
     container.setAttribute('id', 'settings-container')
     const content = `
         <h2>Settings</h2>
+        <div class="settings-body">
+            <div class="toggle-body">
+                <span>Dark theme</span>
+                <button class="toggle-mode" onclick="toggleDarkMode()" title="Toggle dark mode">
+                    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                        <path
+                            d="M6 18h12c3.311 0 6-2.689 6-6s-2.689-6-6-6h-12.039c-3.293.021-5.961 2.701-5.961 6 0 3.311 2.688 6 6 6zm12-10c-2.208 0-4 1.792-4 4s1.792 4 4 4 4-1.792 4-4-1.792-4-4-4z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
         <footer>
             <div class="copyright-text">
                 ©️ 2022
