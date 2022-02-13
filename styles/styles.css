@@ -10,7 +10,24 @@
     font-family: var(--font-family);
     color: var(--primary-text-color);
 }
-:root{
+html{
+    --primary-color: rgb(25, 25, 25);
+    --secondary-color: rgb(44, 44, 44);
+    --color-gray: rgb(51, 51, 51);
+    --dark-gray: rgb(51, 51, 51);
+    --light-gray: rgb(62, 62, 62);
+    --primary-text-color: white;
+    --background-color: var(--primary-color);
+    --transparent-background: rgba(25, 25, 25, 0.9);
+    --keyboard-button-color: rgb(93, 93, 93);
+    --board-box-border: 1px solid var(--dark-gray);
+    --board-box-active-border: 2px solid var(--light-gray);
+    --correct-color: #538d4e;
+    --present-color: #b59f3b;
+    --font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans', sans-serif;
+    font-size: 10px;
+}
+html.dark{
     --primary-color: rgb(25, 25, 25);
     --secondary-color: rgb(44, 44, 44);
     --color-gray: rgb(51, 51, 51);
@@ -60,11 +77,6 @@ header{
     font-weight: bold;
     margin: 0;
 }
-.social-link svg{
-    width: clamp(2rem, 2vw, 4rem);
-    fill: var(--primary-text-color);
-    margin: 0 1rem;
-}
 .toggle-mode, .settings-button{
     background: transparent;
     border: 0;
@@ -73,6 +85,13 @@ header{
     width: 2.4rem;
     height: 2.4rem;
     fill: var(--primary-text-color)
+}
+html .toggle-mode{
+    transform: rotateY(180deg);
+    transition: transform 1s;
+}
+html.dark .toggle-mode{
+    transform: rotateY(0);
 }
 
 main{

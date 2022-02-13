@@ -1,4 +1,10 @@
 
+// toggle dark mode
+function toggleDarkMode() {
+    const htmlClassList = document.querySelector('html').classList;
+    [...htmlClassList].includes('dark') ? htmlClassList.remove('dark') : htmlClassList.add('dark')
+}
+
 // define some congrats wishes for winners
 const allWishes = ['Magnificent', 'Spectacular', 'Impressive', 'Splendicious', 'Skilful', 'Splendid', 'Marvellous', 'Brilliant', 'Excellent']
 
