@@ -30,19 +30,22 @@ async function loadAllData() {
     allowInput()
 }
 
-
+// allow input letter by user
 function allowInput() {
     keyboard.addEventListener('click', processMouseClick)
     document.addEventListener('keyup', processKeyboardType)
 }
+// block inputing letter by user
 function blockInput() {
     keyboard.removeEventListener('click', processMouseClick)
     document.removeEventListener('keyup', processKeyboardType)
 }
 
+// keyboard functionality for computers
 function processKeyboardType(e) {
     (e.key.match(/^[a-z]$/) || e.key === "Enter" || e.key === "Backspace") && processInput(e.key)
 }
+// on-screen keyboard functionality
 function processMouseClick(e) {
     e.target.dataset.key && processInput(e.target.dataset.key)
     if (e.target.tagName === "BUTTON") {
@@ -51,9 +54,14 @@ function processMouseClick(e) {
     }
 }
 
+// get 5 active letter boxes
 const getActiveBoxes = () => [...board.querySelectorAll('.box[data-state="active"]')]
+// get all empty boxes
 const getEmptyBoxes = () => [...board.querySelectorAll('.box[data-state="empty"]')]
+// set up letter box animation
 const setBoxAnimationState = (box, state) => box.dataset.animation = state
+
+// create new alert notification
 const createAlert = (alert, duration = 1000) => {
     const container = document.getElementById('alerts-container')
     container.style.display = 'block'
@@ -99,14 +107,19 @@ function processDelete() {
 
 // check the user's submission
 function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
-    blockInput()
+    blockInput() // first stop user from inputing letters
+
+    // check if 5 letters are there or not
     if (boxes.length < 5) {
         createAlert("Not enough letters")
         allowInput()
         return
     }
 
+    // gather all letters
     const submission = boxes.reduce((word, box) => word + box.dataset.letter, "")
+
+    // unknown word animation
     if (dictionary && !dictionary.includes(submission)) {
         createAlert("Unknown word")
         boxes.forEach((box, i) => {
@@ -117,18 +130,19 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
         return
     }
 
-    checkWinner && saveToLocalStorage()
+    checkWinner && saveToLocalStorage() // save data to local storage
+
     boxes.forEach((box, index) => {
         setTimeout(() => {
-            setBoxAnimationState(box, 'flip-in')
+            setBoxAnimationState(box, 'flip-in') // add flip in animation
 
+            // start next function after flip in animation ends
             box.addEventListener('animationend', () => {
                 // add state by checking the letter of previous box
                 if (todaysWord[index] === box.textContent) {
                     box.dataset.state = 'correct'
                     keyboard.querySelector(`[data-key="${todaysWord[index]}"]`).dataset.state = 'correct'
-                }
-                else if (todaysWord.includes(box.textContent)) {
+                } else if (todaysWord.includes(box.textContent)) {
                     box.dataset.state = 'present'
                     keyboard.querySelector(`[data-key="${box.textContent}"]`).dataset.state = 'present'
                 } else {
@@ -136,13 +150,16 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                     keyboard.querySelector(`[data-key="${box.textContent}"]`).dataset.state = 'wrong'
                 }
 
-                setBoxAnimationState(box, 'flip-out')
+                setBoxAnimationState(box, 'flip-out') // set flip out animation
+
+                // reset animation state after filp out animation ends
                 box.addEventListener('animationend', () => setBoxAnimationState(box, 'idle'), { once: true })
 
 
                 // check win or lose
                 if (checkWinner && index === boxes.length - 1) {
                     if ((boxes.filter(box => box.dataset.state === 'correct')).length === 5) {
+                        // show notification with a random wish
                         createAlert(allWishes[Math.round(Math.random() * (allWishes.length - 1))], 5000)
 
                         boxes.forEach((box, i) => {
@@ -152,11 +169,13 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                             }, 100 * i)
                         })
                     }
+                    // check if any chances left or not
                     else if (getEmptyBoxes().length === 0) {
+                        // show Notification if no chance left
                         createAlert(`Today's word is "${todaysWord.toUpperCase()}"`, 5000)
                     }
                     else {
-                        // allow user input after animation ends
+                        // allow user input after checking
                         allowInput()
                     }
                 }
@@ -171,14 +190,17 @@ getFromLocalStorage()
 function getFromLocalStorage() {
     const savedData = JSON.parse(localStorage.getItem('user-data'))
 
+    // nothing happens if no saved data found
     if (!savedData) return
 
     const { letters } = savedData
     const previousDate = new Date(savedData.date)
     const currentDate = new Date()
 
+    // if the data is from another day nothing will be done
     if (currentDate.getDate() !== previousDate.getDate()) return
 
+    // write all the letters from saved data to user interface
     letters.forEach(letter => {
         const nextBox = getEmptyBoxes()[0]
         if (!nextBox) return
@@ -186,6 +208,7 @@ function getFromLocalStorage() {
         nextBox.dataset.letter = letter
         nextBox.dataset.state = 'active'
     })
+    // submit all the letters one by one
     for (let i = 0; i <= (letters.length - 5); i++) {
         i % 5 || processSubmit(getActiveBoxes().slice(i, i + 5), false)
     }
