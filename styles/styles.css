@@ -11,38 +11,34 @@
     color: var(--primary-text-color);
 }
 html{
-    --primary-color: rgb(25, 25, 25);
+    --primary-color: rgb(247, 247, 247);
     --secondary-color: rgb(44, 44, 44);
-    --color-gray: rgb(51, 51, 51);
+    --color-gray: rgb(100, 100, 100);
     --dark-gray: rgb(51, 51, 51);
-    --light-gray: rgb(62, 62, 62);
-    --primary-text-color: white;
+    --light-gray: rgb(144, 144, 144);
+    --primary-text-color: rgb(9, 9, 9);
+    --secondary-text-color: rgb(230, 230, 230);
     --background-color: var(--primary-color);
-    --transparent-background: rgba(25, 25, 25, 0.9);
-    --keyboard-button-color: rgb(93, 93, 93);
-    --board-box-border: 1px solid var(--dark-gray);
-    --board-box-active-border: 2px solid var(--light-gray);
+    --transparent-background: rgba(240, 240, 240, 0.9);
+    --keyboard-button-color: rgb(218, 218, 218);
+    --board-box-border: 1px solid var(--light-gray);
+    --board-box-active-border: 2px solid var(--color-gray);
     --correct-color: #538d4e;
     --present-color: #b59f3b;
     --font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans', sans-serif;
     font-size: 10px;
+    --dark-mode-transition-time: 1s;
 }
 html.dark{
     --primary-color: rgb(25, 25, 25);
-    --secondary-color: rgb(44, 44, 44);
     --color-gray: rgb(51, 51, 51);
     --dark-gray: rgb(51, 51, 51);
-    --light-gray: rgb(62, 62, 62);
+    --light-gray: rgb(80, 80, 80);
     --primary-text-color: white;
-    --background-color: var(--primary-color);
     --transparent-background: rgba(25, 25, 25, 0.9);
     --keyboard-button-color: rgb(93, 93, 93);
     --board-box-border: 1px solid var(--dark-gray);
     --board-box-active-border: 2px solid var(--light-gray);
-    --correct-color: #538d4e;
-    --present-color: #b59f3b;
-    --font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans', sans-serif;
-    font-size: 10px;
 }
 
 body{
@@ -55,11 +51,16 @@ body{
     margin: 0;
     display: flex;
     flex-direction: column;
+    transition: background var(--dark-mode-transition-time);
+}
+button{
+    cursor: pointer;
 }
 header{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 clamp(2rem, 3vw, 3rem);
 }
 .heading-text{
     text-align: center;
@@ -81,7 +82,7 @@ header{
     background: transparent;
     border: 0;
 }
-.toggle-mode > svg, .settings-button > svg{
+.settings-button > svg{
     width: 2.4rem;
     height: 2.4rem;
     fill: var(--primary-text-color)
@@ -89,6 +90,7 @@ header{
 html .toggle-mode{
     transform: rotateY(180deg);
     transition: transform 1s;
+    fill: var(--primary-text-color)
 }
 html.dark .toggle-mode{
     transform: rotateY(0);
@@ -143,7 +145,7 @@ main{
     display: flex;
     justify-content: center;
 }
-button{
+#keyboard button{
     text-transform: uppercase;
     color: var(--primary-text-color);
     font-size: clamp(1.8rem, 5vw, 2.5rem);
@@ -156,16 +158,22 @@ button{
     cursor: pointer;
     user-select: none;
 }
+#keyboard button > svg{
+    fill: var(--primary-text-color);
+}
 
 
 [data-state="present"]{
     background-color: var(--present-color);
+    color: var(--secondary-text-color);
 }
 [data-state="correct"]{
     background-color: var(--correct-color);
+    color: var(--secondary-text-color);
 }
 [data-state="wrong"]{
     background-color: var(--color-gray);
+    color: var(--secondary-text-color);
 }
 
 @media screen and (min-width: 900px) and (min-height: 800px) {
