@@ -22,6 +22,10 @@
     <script src="scripts/script.js" defer></script>
     <script src="scripts/instructions.js" defer></script>
     <script src="scripts/settings.js" defer></script>
+    <script>
+        // set up dark mode
+        JSON.parse(localStorage.getItem('user-data'))?.darkMode || document.querySelector('html').classList.remove('dark')
+    </script>
 </head>
 
 <body>
