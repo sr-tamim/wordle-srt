@@ -3,6 +3,12 @@
 function toggleDarkMode() {
     const htmlClassList = document.querySelector('html').classList;
     [...htmlClassList].includes('dark') ? htmlClassList.remove('dark') : htmlClassList.add('dark')
+
+    const darkModeStatus = [...htmlClassList].includes('dark')
+    const savedData = JSON.parse(localStorage.getItem('user-data'))
+    const newData = savedData ? { ...savedData, darkMode: darkModeStatus }
+        : { darkMode: darkModeStatus }
+    localStorage.setItem('user-data', JSON.stringify(newData))
 }
 
 // define some congrats wishes for winners
