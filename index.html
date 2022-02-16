@@ -24,7 +24,8 @@
     <script src="scripts/settings.js" defer></script>
     <script>
         // set up dark mode
-        JSON.parse(localStorage.getItem('user-data'))?.darkMode || document.querySelector('html').classList.remove('dark')
+        const userData = JSON.parse(localStorage.getItem('user-data'))
+        userData && (userData?.darkMode === false && document.querySelector('html').classList.remove('dark'))
     </script>
 </head>
 

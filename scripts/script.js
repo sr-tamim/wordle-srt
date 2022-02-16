@@ -231,7 +231,8 @@ function saveToLocalStorage() {
     const filledBoxes = [...board.querySelectorAll(':not(.box[data-state="empty"])')]
     const letters = filledBoxes.map(box => box.dataset.letter)
     const date = Date.now()
-    const newData = { letters, date }
+    const previousData = JSON.parse(localStorage.getItem('user-data')) || {}
+    const newData = { ...previousData, letters, date }
     localStorage.setItem('user-data', JSON.stringify(newData))
 }
 
