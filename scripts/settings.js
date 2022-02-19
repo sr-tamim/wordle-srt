@@ -1,11 +1,21 @@
 
 const overlayContainer = document.getElementById('overlay-container')
 
+function setOverlayContainerAnimation(animationName, animationEndFunction) {
+    overlayContainer.dataset.animation = animationName
+    overlayContainer.addEventListener('animationend', () => {
+        delete overlayContainer.dataset.animation
+        animationEndFunction && animationEndFunction()
+    }, { once: true })
+}
+
 function hideSettings() {
-    while (overlayContainer.children.length > 1) {
-        overlayContainer.removeChild(overlayContainer.lastChild)
-    }
-    overlayContainer.style.display = "none"
+    setOverlayContainerAnimation('fade-out', () => {
+        while (overlayContainer.children.length > 1) {
+            overlayContainer.removeChild(overlayContainer.lastChild)
+        }
+        overlayContainer.style.display = "none"
+    })
 }
 
 function revealSettings() {
@@ -50,5 +60,6 @@ function revealSettings() {
 
     container.innerHTML = content
     overlayContainer.style.display = 'flex'
+    setOverlayContainerAnimation('zoom-in')
     overlayContainer.appendChild(container)
 }

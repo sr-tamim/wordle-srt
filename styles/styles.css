@@ -88,12 +88,16 @@ header{
 .settings-button > svg{
     width: 2.4rem;
     height: 2.4rem;
-    fill: var(--primary-text-color)
+    fill: var(--primary-text-color);
 }
 html .toggle-mode{
     transform: rotateY(180deg);
     transition: transform 1s;
-    fill: var(--primary-text-color)
+}
+.toggle-mode > svg{
+    width: 2.4rem;
+    height: 2.4rem;
+    fill: var(--primary-text-color);
 }
 html.dark .toggle-mode{
     transform: rotateY(0);

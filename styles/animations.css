@@ -1,4 +1,7 @@
 
+[data-animation="fade-in"]{
+    animation: fadeIn 500ms ease-in;
+}
 [data-animation="fade-out"]{
     animation: fadeOut 500ms ease-out;
 }
@@ -21,6 +24,10 @@
     animation: Shake 600ms;
 }
 
+@keyframes fadeIn {
+    from{ opacity: 0;}
+    to{ opacity: 1;}
+}
 @keyframes fadeOut {
     from{ opacity: 1;}
     to{ opacity: 0;}
