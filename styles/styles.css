@@ -81,7 +81,7 @@ header{
     font-weight: bold;
     margin: 0;
 }
-.toggle-mode, .settings-button{
+.toggle-dark-mode, .settings-button{
     background: transparent;
     border: 0;
 }
@@ -90,16 +90,16 @@ header{
     height: 2.4rem;
     fill: var(--primary-text-color);
 }
-html .toggle-mode{
+html .toggle-dark-mode{
     transform: rotateY(180deg);
     transition: transform 1s;
 }
-.toggle-mode > svg{
+.toggle-dark-mode > svg{
     width: 2.4rem;
     height: 2.4rem;
     fill: var(--primary-text-color);
 }
-html.dark .toggle-mode{
+html.dark .toggle-dark-mode{
     transform: rotateY(0);
 }
 
