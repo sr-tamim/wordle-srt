@@ -11,14 +11,14 @@
     color: var(--primary-text-color);
 }
 html{
-    --primary-color: rgb(247, 247, 247);
+    --primary-color: rgb(0, 221, 100);
     --secondary-color: rgb(44, 44, 44);
     --color-gray: rgb(100, 100, 100);
     --dark-gray: rgb(51, 51, 51);
     --light-gray: rgb(144, 144, 144);
     --primary-text-color: rgb(9, 9, 9);
     --secondary-text-color: rgb(230, 230, 230);
-    --background-color: var(--primary-color);
+    --background-color: rgb(247, 247, 247);
     --transparent-background: rgba(240, 240, 240, 0.9);
     --keyboard-button-color: rgb(218, 218, 218);
     --board-box-border: 1px solid var(--light-gray);
@@ -30,11 +30,12 @@ html{
     --dark-mode-transition-time: 1s;
 }
 html.dark{
-    --primary-color: rgb(25, 25, 25);
+    --primary-color: rgb(0, 151, 68);
     --color-gray: rgb(51, 51, 51);
     --dark-gray: rgb(51, 51, 51);
     --light-gray: rgb(80, 80, 80);
     --primary-text-color: white;
+    --background-color: rgb(25, 25, 25);
     --transparent-background: rgba(25, 25, 25, 0.9);
     --keyboard-button-color: rgb(93, 93, 93);
     --board-box-border: 1px solid var(--dark-gray);
@@ -81,7 +82,7 @@ header{
     font-weight: bold;
     margin: 0;
 }
-.toggle-dark-mode, .settings-button{
+.settings-button{
     background: transparent;
     border: 0;
 }
@@ -90,17 +91,10 @@ header{
     height: 2.4rem;
     fill: var(--primary-text-color);
 }
-html .toggle-dark-mode{
-    transform: rotateY(180deg);
-    transition: transform 1s;
-}
 .toggle-dark-mode > svg{
     width: 2.4rem;
     height: 2.4rem;
     fill: var(--primary-text-color);
-}
-html.dark .toggle-dark-mode{
-    transform: rotateY(0);
 }
 
 main{
