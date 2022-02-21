@@ -4,9 +4,6 @@
     width: 5rem;
     height: 2.6rem;
 }
-
-.toggle > input { display: none; }
-
 .toggle-slider {
     position: absolute;
     cursor: pointer;
@@ -29,19 +26,17 @@
     transition: 300ms;
 }
 
-.toggle input:checked + .toggle-slider {
-    background-color: #2196F3;
-}
-
-.toggle input:checked + .toggle-slider::before {
-    left: unset;
-    right: 0.3rem;
-}
-
 html.dark .toggle.dark-mode > .toggle-slider{
-    background-color: var(--primary-color);;
+    background-color: var(--primary-color);
 }
 html.dark .toggle.dark-mode > .toggle-slider::before{
+    left: calc(100% - 0.3rem);
+    transform: translateX(-100%);
+}
+html.high-contrast .toggle.high-contrast > .toggle-slider{
+    background-color: var(--primary-color);
+}
+html.high-contrast .toggle.high-contrast > .toggle-slider::before{
     left: calc(100% - 0.3rem);
     transform: translateX(-100%);
 }

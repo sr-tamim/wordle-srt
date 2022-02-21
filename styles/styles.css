@@ -41,6 +41,11 @@ html.dark{
     --board-box-border: 1px solid var(--dark-gray);
     --board-box-active-border: 2px solid var(--light-gray);
 }
+html.high-contrast{
+    --primary-color: #DD6D34;
+    --correct-color: #DD6D34;
+    --present-color: #78ADE1;
+}
 
 body{
     background-color: var(--background-color);

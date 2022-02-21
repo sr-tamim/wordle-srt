@@ -1,5 +1,5 @@
 
-const newUser = !localStorage.getItem('user-data')
+const newUser = !localStorage.getItem('user-data')?.letters
 newUser && showInstructions()
 
 function showInstructions() {
