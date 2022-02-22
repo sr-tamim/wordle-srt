@@ -9,6 +9,7 @@
     box-sizing: border-box;
     font-family: var(--font-family);
     color: var(--primary-text-color);
+    -webkit-tap-highlight-color: transparent;
 }
 html{
     --primary-color: rgb(0, 221, 100);
@@ -87,18 +88,13 @@ header{
     font-weight: bold;
     margin: 0;
 }
-.settings-button{
-    background: transparent;
-    border: 0;
+.header-elements > span{
+    margin: 0 0.5rem;
+    cursor: pointer;
 }
-.settings-button > svg{
-    width: 2.4rem;
-    height: 2.4rem;
-    fill: var(--primary-text-color);
-}
-.toggle-dark-mode > svg{
-    width: 2.4rem;
-    height: 2.4rem;
+.header-elements svg{
+    width: clamp(2rem, 2vw, 2.5rem);
+    height: clamp(2rem, 2vw, 2.5rem);
     fill: var(--primary-text-color);
 }
 

@@ -1,13 +1,18 @@
 #modal-container{
+    height: 100%;
+    width: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 10%;
     z-index: 100;
+    backdrop-filter: blur(3px);
+}
+
+#modal-container > *{
+    border: 1px solid var(--light-gray);
+    border-radius: 1rem;
 }

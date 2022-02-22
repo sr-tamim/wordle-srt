@@ -3,11 +3,14 @@
     max-width: 40rem;
     background-color: var(--transparent-background);
     padding: 2rem;
-    border-radius: 1rem;
-    border: 1px solid var(--light-gray);
-    backdrop-filter: blur(3px);
 }
 
+#instructions-container > h1{
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 0;
+}
 #instructions-container > p{
     font-size: 1.4rem;
 }

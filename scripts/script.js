@@ -13,7 +13,6 @@ const dayIndex = Math.floor((today - releaseDate.valueOf()) / (1000 * 60 * 60 * 
 // animation durations
 const FLIP_DURATION = 500
 const POP_DURATION = 100
-const FADE_DURATION = 500
 const SHAKE_DURATION = 600
 const BOUNCE_DURATION = 1000
 
@@ -47,10 +46,10 @@ function processKeyboardType(e) {
 }
 // on-screen keyboard functionality
 function processMouseClick(e) {
-    e.target.dataset.key && processInput(e.target.dataset.key)
     if (e.target.tagName === "BUTTON") {
+        e.target.dataset.key && processInput(e.target.dataset.key)
         e.target.dataset.animation = 'pop'
-        setTimeout(() => delete e.target.dataset.animation, POP_DURATION)
+        e.target.addEventListener('animationend', () => e.target.dataset.animation = 'idle', { once: true })
     }
 }
 
@@ -91,7 +90,7 @@ function processInput(key) {
         nextBox.dataset.letter = key
         nextBox.dataset.state = 'active'
         setBoxAnimationState(nextBox, 'pop')
-        setTimeout(() => setBoxAnimationState(nextBox, 'idle'), POP_DURATION)
+        nextBox.addEventListener('animationend', () => setBoxAnimationState(nextBox, 'idle'), { once: true })
     }
 }
 
@@ -194,7 +193,7 @@ function getFromLocalStorage() {
     if (!savedData) return
 
     const { letters } = savedData
-    const previousDate = new Date(savedData.date)
+    const previousDate = new Date(savedData.lastPlayedDate)
     const currentDate = new Date()
 
     // if the data is from another day nothing will be done
@@ -220,7 +219,7 @@ function saveToLocalStorage() {
     const letters = filledBoxes.map(box => box.dataset.letter)
     const date = Date.now()
     const previousData = JSON.parse(localStorage.getItem('user-data')) || {}
-    const newData = { ...previousData, letters, date }
+    const newData = { ...previousData, letters, lastPlayedDate: date }
     localStorage.setItem('user-data', JSON.stringify(newData))
 }
 
@@ -231,8 +230,8 @@ const modal = document.getElementById('modal-container')
 
 modal.style.display === 'none' || modal.addEventListener('click', () => {
     modal.dataset.animation = 'fade-out'
-    setTimeout(() => {
+    modal.addEventListener('animationend', () => {
         modal.style.display = 'none'
         modal.lastChild && modal.removeChild(modal.lastChild)
-    }, FADE_DURATION)
+    }, { once: true })
 }, { once: true })
