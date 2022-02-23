@@ -171,16 +171,27 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                         })
 
                         const savedData = getSavedData()
+                        const lastWin = new Date(savedData?.lastWinDate) || undefined
+                        const today = new Date()
+                        const currentStreak = lastWin ? ((lastWin.getDate() === today.getDate - 1 && lastWin.getMonth() === today.getMonth() && lastWin.getFullYear() === today.getFullYear()) ?
+                            savedData.currentStreak + 1 : 1) : 1;
+                        const maxStreak = savedData.maxStreak ? (savedData.maxStreak < currentStreak ? currentStreak : savedData.maxStreak)
+                            : currentStreak;
                         saveDataInLocalStorage({
                             wordlePlayed: savedData?.wordlePlayed + 1 || 1,
-                            wordleWinCount: savedData?.wordleWinCount + 1 || 1
+                            wordleWinCount: savedData?.wordleWinCount + 1 || 1,
+                            lastWinDate: Date.now(),
+                            currentStreak, maxStreak
                         })
                     }
                     // check if any chances left or not
                     else if (getEmptyBoxes().length === 0) {
                         // show Notification if no chance left
                         createAlert(`Today's word is "${todaysWord.toUpperCase()}"`, 5000)
-                        saveDataInLocalStorage({ wordlePlayed: getSavedData()?.wordlePlayed + 1 || 1 })
+                        saveDataInLocalStorage({
+                            wordlePlayed: getSavedData()?.wordlePlayed + 1 || 1,
+                            currentStreak: 1
+                        })
                     }
                     else {
                         // allow user input after checking
@@ -197,7 +208,12 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
 function getSavedData() {
     return JSON.parse(localStorage.getItem("user-data"))
 }
-
+// save data to local storage
+function saveDataInLocalStorage(data) {
+    const savedData = getSavedData() || {}
+    const newData = { ...savedData, ...data }
+    localStorage.setItem('user-data', JSON.stringify(newData))
+}
 
 getFromLocalStorage()
 function getFromLocalStorage() {
@@ -227,20 +243,13 @@ function getFromLocalStorage() {
     }
 }
 
-// save data to local storage
-function saveDataInLocalStorage(data) {
-    const savedData = getSavedData() || {}
-    const newData = { ...savedData, ...data }
-    localStorage.setItem('user-data', JSON.stringify(newData))
-}
 
 function AutoSaveToLocalStorage() {
     const filledBoxes = [...board.querySelectorAll(':not(.box[data-state="empty"])')]
     const letters = filledBoxes.map(box => box.dataset.letter)
     const date = Date.now()
     const previousData = getSavedData() || {}
-    const newData = { ...previousData, letters, lastPlayedDate: date }
-    localStorage.setItem('user-data', JSON.stringify(newData))
+    saveDataInLocalStorage({ ...previousData, letters, lastPlayedDate: date })
 }
 
 

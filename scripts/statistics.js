@@ -1,6 +1,6 @@
 
 function showStatistics() {
-    const { wordlePlayed, wordleWinCount } = getSavedData() || {}
+    const { wordlePlayed, wordleWinCount, currentStreak, maxStreak } = getSavedData() || {}
 
     const container = document.createElement('div')
     container.setAttribute('id', 'statistics-container')
@@ -16,12 +16,12 @@ function showStatistics() {
             <span class="data-title">Win %</span>
         </div>
         <div class="state-data">
-            <span class="data" data-wordle-played>0</span>
+            <span class="data" data-wordle-played>${currentStreak || 0}</span>
             <span class="data-title">Current</span>
             <span class="data-title">Streak</span>
         </div>
         <div class="state-data">
-            <span class="data" data-wordle-played>0</span>
+            <span class="data" data-wordle-played>${maxStreak || 0}</span>
             <span class="data-title">Max</span>
             <span class="data-title">Streak</span>
         </div>
