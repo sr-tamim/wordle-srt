@@ -1,5 +1,5 @@
 # This is a clone of Wordle game
-### Developed by [SR Tamim](https://linkedin.com/in/srtamim)
+### Developed by [SR Tamim](https://sr-tamim.vercel.app)
 
 Everyday new word will be released & you have to guess the word if four tries. You will get a clue after each try.
 - Green tile indicates => The letter is in the correct spot compare to targeted word
