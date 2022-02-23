@@ -164,7 +164,7 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                         boxes.forEach((box, i) => {
                             setTimeout(() => {
                                 box.dataset.animation = "bounce"
-                                setTimeout(() => boxes.forEach(box => box.dataset.animation = "idle"), BOUNCE_DURATION)
+                                box.addEventListener('animationend', () => boxes.forEach(box => box.dataset.animation = "idle"), { once: true })
                             }, 100 * i)
                         })
                     }
