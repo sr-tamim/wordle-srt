@@ -51,10 +51,7 @@
                 }, { once: true })
             })
         }, 1000)
-
-        modal.style.display = 'flex'
-        modal.dataset.animation = 'zoom-in'
-        modal.appendChild(container)
+        openModal(container)
     }
 
 

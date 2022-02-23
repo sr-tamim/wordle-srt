@@ -131,7 +131,7 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
         return
     }
 
-    checkWinner && saveToLocalStorage() // save data to local storage
+    checkWinner && AutoSaveToLocalStorage() // save data to local storage
 
     boxes.forEach((box, index) => {
         setTimeout(() => {
@@ -169,11 +169,18 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                                 box.addEventListener('animationend', () => boxes.forEach(box => box.dataset.animation = "idle"), { once: true })
                             }, 100 * i)
                         })
+
+                        const savedData = getSavedData()
+                        saveDataInLocalStorage({
+                            wordlePlayed: savedData?.wordlePlayed + 1 || 1,
+                            wordleWinCount: savedData?.wordleWinCount + 1 || 1
+                        })
                     }
                     // check if any chances left or not
                     else if (getEmptyBoxes().length === 0) {
                         // show Notification if no chance left
                         createAlert(`Today's word is "${todaysWord.toUpperCase()}"`, 5000)
+                        saveDataInLocalStorage({ wordlePlayed: getSavedData()?.wordlePlayed + 1 || 1 })
                     }
                     else {
                         // allow user input after checking
@@ -221,7 +228,13 @@ function getFromLocalStorage() {
 }
 
 // save data to local storage
-function saveToLocalStorage() {
+function saveDataInLocalStorage(data) {
+    const savedData = getSavedData() || {}
+    const newData = { ...savedData, ...data }
+    localStorage.setItem('user-data', JSON.stringify(newData))
+}
+
+function AutoSaveToLocalStorage() {
     const filledBoxes = [...board.querySelectorAll(':not(.box[data-state="empty"])')]
     const letters = filledBoxes.map(box => box.dataset.letter)
     const date = Date.now()
@@ -231,11 +244,18 @@ function saveToLocalStorage() {
 }
 
 
+
 // modal close listener
-modal.style.display === 'none' || modal.addEventListener('click', () => {
-    modal.dataset.animation = 'fade-out'
-    modal.addEventListener('animationend', () => {
-        modal.style.display = 'none'
-        modal.lastChild && modal.removeChild(modal.lastChild)
+function openModal(elements) {
+    modal.style.display = 'flex'
+    modal.dataset.animation = 'zoom-in'
+    modal.appendChild(elements)
+
+    modal.addEventListener('click', () => {
+        modal.dataset.animation = 'fade-out'
+        modal.addEventListener('animationend', () => {
+            modal.style.display = 'none'
+            modal.lastChild && modal.removeChild(modal.lastChild)
+        }, { once: true })
     }, { once: true })
-}, { once: true })
+}

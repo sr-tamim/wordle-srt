@@ -16,3 +16,32 @@
     border: 1px solid var(--light-gray);
     border-radius: 1rem;
 }
+
+
+/* statistics container styles */
+#statistics-container{
+    min-width: 30rem;
+    background: var(--transparent-background);
+}
+#statistics-container > h2{
+    text-align: center;
+    font-size: clamp(1.8rem, 2vw, 2.3rem);
+}
+
+.player-statistics{
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+.player-statistics > .state-data{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1rem;
+}
+.player-statistics > .state-data > .data{
+    font-size: clamp(3rem, 2vw, 4rem);
+}
+.player-statistics > .state-data > .data-title{
+    font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+}
