@@ -5,6 +5,8 @@ const allWishes = ['Magnificent', 'Spectacular', 'Impressive', 'Splendicious', '
 // constant variables
 const board = document.getElementById('letter-board')
 const keyboard = document.getElementById('keyboard')
+const overlayContainer = document.getElementById('overlay-container')
+const modal = document.getElementById('modal-container')
 
 const releaseDate = new Date(2022, 1, 6)
 const today = Date.now()
@@ -185,9 +187,14 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
 }
 
 // get data from local storage
+function getSavedData() {
+    return JSON.parse(localStorage.getItem("user-data"))
+}
+
+
 getFromLocalStorage()
 function getFromLocalStorage() {
-    const savedData = JSON.parse(localStorage.getItem('user-data'))
+    const savedData = getSavedData()
 
     // nothing happens if no saved data found
     if (!savedData) return
@@ -218,16 +225,13 @@ function saveToLocalStorage() {
     const filledBoxes = [...board.querySelectorAll(':not(.box[data-state="empty"])')]
     const letters = filledBoxes.map(box => box.dataset.letter)
     const date = Date.now()
-    const previousData = JSON.parse(localStorage.getItem('user-data')) || {}
+    const previousData = getSavedData() || {}
     const newData = { ...previousData, letters, lastPlayedDate: date }
     localStorage.setItem('user-data', JSON.stringify(newData))
 }
 
 
 // modal close listener
-const modal = document.getElementById('modal-container')
-
-
 modal.style.display === 'none' || modal.addEventListener('click', () => {
     modal.dataset.animation = 'fade-out'
     modal.addEventListener('animationend', () => {

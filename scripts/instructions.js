@@ -31,10 +31,9 @@
     </div>
     <p>The letter <b>U</b> is not in the word in any spot.</p>
     <hr>
-    <h2>A new WORDLE will be available each day!</h2>
-</p>`
+    <h2>A new WORDLE will be available each day!</h2>`
 
-    const newUser = !localStorage.getItem('user-data')?.lastPlayedDate
+    const newUser = !getSavedData()?.lastPlayedDate
     newUser && showInstructions()
 
     function showInstructions() {
@@ -53,7 +52,6 @@
             })
         }, 1000)
 
-        const modal = document.getElementById('modal-container')
         modal.style.display = 'flex'
         modal.dataset.animation = 'zoom-in'
         modal.appendChild(container)

@@ -1,6 +1,4 @@
 
-const overlayContainer = document.getElementById('overlay-container')
-
 function setOverlayContainerAnimation(animationName, animationEndFunction) {
     overlayContainer.dataset.animation = animationName
     overlayContainer.addEventListener('animationend', () => {

@@ -1,6 +1,6 @@
 
-JSON.parse(localStorage.getItem('user-data'))?.darkMode === false && toggleDarkMode(false)
-JSON.parse(localStorage.getItem('user-data'))?.highContrastMode === true && toggleHighContrastMode(true)
+getSavedData()?.darkMode === false && toggleDarkMode(false)
+getSavedData()?.highContrastMode === true && toggleHighContrastMode(true)
 
 // toggle dark mode
 function toggleDarkMode(status) {
@@ -9,7 +9,7 @@ function toggleDarkMode(status) {
 
     darkModeStatus ? htmlClassList.add('dark') : htmlClassList.remove('dark')
 
-    const savedData = JSON.parse(localStorage.getItem('user-data'))
+    const savedData = getSavedData()
     const newData = savedData ? { ...savedData, darkMode: darkModeStatus }
         : { darkMode: darkModeStatus }
     localStorage.setItem('user-data', JSON.stringify(newData))
@@ -32,7 +32,7 @@ function toggleHighContrastMode(status) {
 
     highContrastMode ? htmlClassList.add('high-contrast') : htmlClassList.remove('high-contrast')
 
-    const savedData = JSON.parse(localStorage.getItem('user-data'))
+    const savedData = getSavedData()
     const newData = savedData ? { ...savedData, highContrastMode }
         : { highContrastMode }
     localStorage.setItem('user-data', JSON.stringify(newData))
