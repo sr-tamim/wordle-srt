@@ -190,7 +190,7 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                         createAlert(`Today's word is "${todaysWord.toUpperCase()}"`, 5000)
                         saveDataInLocalStorage({
                             wordlePlayed: getSavedData()?.wordlePlayed + 1 || 1,
-                            currentStreak: 1
+                            currentStreak: 0
                         })
                     }
                     else {
