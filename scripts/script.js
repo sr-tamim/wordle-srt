@@ -48,7 +48,7 @@ function processKeyboardType(e) {
 }
 // on-screen keyboard functionality
 function processMouseClick(e) {
-    if (e.target.tagName === "BUTTON") {
+    if (e.target.dataset.key) {
         e.target.dataset.key && processInput(e.target.dataset.key)
         e.target.dataset.animation = 'pop'
         e.target.addEventListener('animationend', () => e.target.dataset.animation = 'idle', { once: true })
