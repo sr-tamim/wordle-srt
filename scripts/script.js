@@ -28,7 +28,7 @@ async function loadAllData() {
     dictionary = await getDictionary.json()
     allWords = await getAllWords.json()
     todaysWord = allWords[dayIndex]
-    allowInput()
+    allowInput(); getFromLocalStorage()
 }
 
 // allow input letter by user
@@ -215,7 +215,7 @@ function saveDataInLocalStorage(data) {
     localStorage.setItem('user-data', JSON.stringify(newData))
 }
 
-getFromLocalStorage()
+
 function getFromLocalStorage() {
     const savedData = getSavedData()
 
