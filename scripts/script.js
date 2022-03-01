@@ -28,7 +28,8 @@ async function loadAllData() {
     dictionary = await getDictionary.json()
     allWords = await getAllWords.json()
     todaysWord = allWords[dayIndex]
-    allowInput(); getFromLocalStorage()
+    allowInput()
+    getFromLocalStorage()
 }
 
 // allow input letter by user
@@ -168,7 +169,9 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                                 box.dataset.animation = "bounce"
                                 box.addEventListener('animationend', () => boxes.forEach(box => box.dataset.animation = "idle"), { once: true })
                             }, 100 * i)
-                        }); setTimeout(showStatistics, 5000)
+                        })
+
+                        setTimeout(showStatistics, 5000) // show statistics modal after 5s
 
                         const savedData = getSavedData()
                         const lastWin = new Date(savedData?.lastWinDate) || undefined
@@ -187,7 +190,10 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                     // check if any chances left or not
                     else if (getEmptyBoxes().length === 0) {
                         // show Notification if no chance left
-                        createAlert(`Today's word is "${todaysWord.toUpperCase()}"`, 5000); setTimeout(showStatistics, 4000)
+                        createAlert(`Today's word is "${todaysWord.toUpperCase()}"`, 5000)
+
+                        setTimeout(showStatistics, 4000) // show statistics modal after 4s
+
                         saveDataInLocalStorage({
                             wordlePlayed: getSavedData()?.wordlePlayed + 1 || 1,
                             currentStreak: 0
