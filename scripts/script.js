@@ -159,7 +159,9 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
 
 
                 // check win or lose
-                if (checkWinner && index === boxes.length - 1) {
+                if (!checkWinner && getEmptyBoxes().length !== 0) {
+                    allowInput()
+                } else if (checkWinner && index === boxes.length - 1) {
                     if ((boxes.filter(box => box.dataset.state === 'correct')).length === 5) {
                         // show notification with a random wish
                         createAlert(allWishes[Math.round(Math.random() * (allWishes.length - 1))], 5000)
