@@ -12,7 +12,7 @@ function showStatistics() {
             <span class="data-title">Played</span>
         </div>
         <div class="state-data">
-            <span class="data" data-wordle-played>${wordleWinCount / wordlePlayed * 100 || 0}</span>
+            <span class="data" data-wordle-played>${Math.round(wordleWinCount / wordlePlayed * 100) || 0}</span>
             <span class="data-title">Win %</span>
         </div>
         <div class="state-data">
