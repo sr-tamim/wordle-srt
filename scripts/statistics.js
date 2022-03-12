@@ -13,13 +13,10 @@ function wordleShare() {
         if (!((index + 1) % 5)) text += `\n`
     })
     if (navigator.share) {
-        navigator.share({
-            text: 'Hello World'
-        }).then(res => alert(res))
-            .catch(err => alert(err))
+        navigator.share({ text }).catch(err => alert(err))
         return
     }
-    navigator.clipboard.writeText(text).then(res => console.log(res))
+    navigator.clipboard.writeText(text).then(() => createAlert('Copied to clipboard', 2000))
 }
 function showStatistics() {
     const { wordlePlayed, wordleWinCount, currentStreak, maxStreak, wonToday } = getSavedData() || {}
