@@ -9,7 +9,7 @@ function showStatistics() {
         const seconds = Math.floor(nextWordleIn / 1000 - minutes * 60 - hours * 3600)
         const countDownTime = `${hours}:${minutes}:${seconds}`
 
-        const htmlElement = document.querySelector('.next-wordle-time > time')
+        const htmlElement = document.querySelector('.countdown > time')
         let timeout
         if (htmlElement) {
             htmlElement.innerText = countDownTime
@@ -23,7 +23,7 @@ function showStatistics() {
     const container = document.createElement('div')
     container.setAttribute('id', 'statistics-container')
 
-    const statistics = `<h2>Statistics</h2>
+    const statistics = `<h3>Statistics</h3>
     <div class="player-statistics">
         <div class="state-data">
             <span class="data" data-wordle-played>${wordlePlayed || 0}</span>
@@ -44,15 +44,16 @@ function showStatistics() {
             <span class="data-title">Streak</span>
         </div>
     </div>
-    <hr>
-    <div>
         ${!getEmptyBoxes().length ?
-            `<div class="next-wordle-time">
-                <h3>Next Wordle</h3>
-                <time></time>
+            `<hr>
+            <div class="footer">
+                <div class="countdown">
+                    <h3>Next Wordle</h3>
+                    <time></time>
+                </div>
             </div>`
             : ``}
-    </div>`
+    `
 
     container.innerHTML = statistics
     openModal(container)
