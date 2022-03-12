@@ -185,7 +185,7 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                         saveDataInLocalStorage({
                             wordlePlayed: savedData?.wordlePlayed + 1 || 1,
                             wordleWinCount: savedData?.wordleWinCount + 1 || 1,
-                            lastWinDate: Date.now(),
+                            lastWinDate: Date.now(), wonToday: true,
                             currentStreak, maxStreak
                         })
                     }
@@ -235,7 +235,9 @@ function getFromLocalStorage() {
     const currentDate = new Date()
 
     // if the data is from another day nothing will be done
-    if (currentDate.getDate() !== previousDate.getDate()) return
+    if (currentDate.getDate() !== previousDate.getDate()) {
+        saveDataInLocalStorage({ wonToday: false })
+    }
 
     // write all the letters from saved data to user interface
     letters.forEach(letter => {
@@ -249,7 +251,7 @@ function getFromLocalStorage() {
     for (let i = 0; i <= (letters.length - 5); i++) {
         i % 5 || processSubmit(getActiveBoxes().slice(i, i + 5), false)
     }
-    !getEmptyBoxes().length && setTimeout(showStatistics, 2000)
+    (!getEmptyBoxes().length || getSavedData()?.wonToday) && setTimeout(showStatistics, 2000)
 }
 
 

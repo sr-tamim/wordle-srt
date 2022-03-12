@@ -1,6 +1,28 @@
 
+function wordleShare() {
+    let text = `Wordle-SRT ${dayIndex + 1} ${!getSavedData()?.wonToday ? 'X' : 6 - getEmptyBoxes().length / 5}/6 \n`;
+    board.querySelectorAll('.box:not([data-state="empty"])').forEach((box, index) => {
+        switch (box.dataset.state) {
+            case 'correct':
+                text += '🟩'; break;
+            case 'present':
+                text += '🟨'; break;
+            case 'wrong':
+                text += '⬛'; break;
+        }
+        if (!((index + 1) % 5)) text += `\n`
+    })
+    if (navigator.share) {
+        navigator.share({
+            text: 'Hello World'
+        }).then(res => alert(res))
+            .catch(err => alert(err))
+        return
+    }
+    navigator.clipboard.writeText(text).then(res => console.log(res))
+}
 function showStatistics() {
-    const { wordlePlayed, wordleWinCount, currentStreak, maxStreak, lastPlayedDate } = getSavedData() || {}
+    const { wordlePlayed, wordleWinCount, currentStreak, maxStreak, wonToday } = getSavedData() || {}
 
     const nextWordleTimeLeft = () => {
         const nextWordleIn = (dayIndex + 1) * 1000 * 60 * 60 * 24 + releaseDate.valueOf() - Date.now(0)
@@ -19,6 +41,7 @@ function showStatistics() {
         }
         return countDownTime
     }
+
 
     const container = document.createElement('div')
     container.setAttribute('id', 'statistics-container')
@@ -44,12 +67,15 @@ function showStatistics() {
             <span class="data-title">Streak</span>
         </div>
     </div>
-        ${!getEmptyBoxes().length ?
+        ${(!getEmptyBoxes().length || wonToday) ?
             `<hr>
             <div class="footer">
                 <div class="countdown">
                     <h3>Next Wordle</h3>
                     <time></time>
+                </div>
+                <div class="share">
+                    <button onClick="wordleShare()">Share</button>
                 </div>
             </div>`
             : ``}
