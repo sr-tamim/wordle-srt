@@ -249,6 +249,7 @@ function getFromLocalStorage() {
     for (let i = 0; i <= (letters.length - 5); i++) {
         i % 5 || processSubmit(getActiveBoxes().slice(i, i + 5), false)
     }
+    !getEmptyBoxes().length && setTimeout(showStatistics, 2000)
 }
 
 

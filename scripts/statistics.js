@@ -1,6 +1,24 @@
 
 function showStatistics() {
-    const { wordlePlayed, wordleWinCount, currentStreak, maxStreak } = getSavedData() || {}
+    const { wordlePlayed, wordleWinCount, currentStreak, maxStreak, lastPlayedDate } = getSavedData() || {}
+
+    const nextWordleTimeLeft = () => {
+        const nextWordleIn = (dayIndex + 1) * 1000 * 60 * 60 * 24 + releaseDate.valueOf() - Date.now(0)
+        const hours = Math.floor(nextWordleIn / (1000 * 60 * 60))
+        const minutes = Math.floor(nextWordleIn / (1000 * 60) - hours * 60)
+        const seconds = Math.floor(nextWordleIn / 1000 - minutes * 60 - hours * 3600)
+        const countDownTime = `${hours}:${minutes}:${seconds}`
+
+        const htmlElement = document.querySelector('.next-wordle-time > time')
+        let timeout
+        if (htmlElement) {
+            htmlElement.innerText = countDownTime
+            timeout = setTimeout(nextWordleTimeLeft, 1000)
+        } else {
+            clearTimeout(timeout)
+        }
+        return countDownTime
+    }
 
     const container = document.createElement('div')
     container.setAttribute('id', 'statistics-container')
@@ -25,8 +43,18 @@ function showStatistics() {
             <span class="data-title">Max</span>
             <span class="data-title">Streak</span>
         </div>
+    </div>
+    <hr>
+    <div>
+        ${!getEmptyBoxes().length ?
+            `<div class="next-wordle-time">
+                <h3>Next Wordle</h3>
+                <time></time>
+            </div>`
+            : ``}
     </div>`
 
     container.innerHTML = statistics
     openModal(container)
+    nextWordleTimeLeft()
 }
