@@ -89,7 +89,8 @@ function showStatistics() {
     </div>
     <div class="guess-distribution">
         <h3>Guess Distribution</h3>
-        <div class="chart-row">
+        ${!guessDistribution ? `<span>No Data</span>`
+            : `<div class="chart-row">
             <div class="row-legend">1</div>
             <div class="row-value">
                 <div class="chart-bar" data-legend="first" >0</div>
@@ -124,7 +125,7 @@ function showStatistics() {
             <div class="row-value">
                 <div class="chart-bar" data-legend="sixth" >0</div>
             </div>
-        </div>
+        </div>`}
     </div>
         ${(!getEmptyBoxes().length || wonToday) ?
             `<hr>

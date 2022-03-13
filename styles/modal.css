@@ -11,6 +11,7 @@
     z-index: 100;
     backdrop-filter: blur(3px);
     background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
 }
 
 #modal-container > *{
@@ -53,6 +54,13 @@
     font-size: clamp(1.2rem, 2vw, 1.4rem);
 }
 
+.guess-distribution > span{
+    font-size: clamp(1.4rem, 1.7vw, 2rem);
+    display: block;
+    text-align: center;
+    color: var(--light-gray);
+    margin: 2rem 0;
+}
 .guess-distribution > .chart-row{
     display: flex;
     align-items: center;
