@@ -237,6 +237,7 @@ function getFromLocalStorage() {
     // if the data is from another day nothing will be done
     if (currentDate.getDate() !== previousDate.getDate()) {
         saveDataInLocalStorage({ wonToday: false })
+        return
     }
 
     // write all the letters from saved data to user interface
