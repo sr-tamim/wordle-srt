@@ -173,8 +173,6 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                             }, 100 * i)
                         })
 
-                        setTimeout(showStatistics, 5000) // show statistics modal after 5s
-
                         const savedData = getSavedData()
                         const lastWin = new Date(savedData?.lastWinDate) || undefined
                         const today = new Date()
@@ -182,12 +180,19 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                             savedData.currentStreak + 1 : 1) : 1;
                         const maxStreak = savedData.maxStreak ? (savedData.maxStreak < currentStreak ? currentStreak : savedData.maxStreak)
                             : currentStreak;
+
+                        const guessDistribution = savedData?.guessDistribution || {}
+                        const guessArray = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth']
+                        const todaysGuess = guessArray[5 - (getEmptyBoxes().length / 5)]
+                        guessDistribution[todaysGuess] = guessDistribution[todaysGuess] + 1 || 1;
                         saveDataInLocalStorage({
                             wordlePlayed: savedData?.wordlePlayed + 1 || 1,
                             wordleWinCount: savedData?.wordleWinCount + 1 || 1,
                             lastWinDate: Date.now(), wonToday: true,
-                            currentStreak, maxStreak
+                            currentStreak, maxStreak, guessDistribution
                         })
+
+                        setTimeout(showStatistics, 4000) // show statistics modal after 5s
                     }
                     // check if any chances left or not
                     else if (getEmptyBoxes().length === 0) {
