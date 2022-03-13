@@ -19,7 +19,8 @@ function wordleShare() {
     navigator.clipboard.writeText(text).then(() => createAlert('Copied to clipboard', 2000))
 }
 function showStatistics() {
-    const { wordlePlayed, wordleWinCount, currentStreak, maxStreak, wonToday } = getSavedData() || {}
+    const { wordlePlayed, wordleWinCount, currentStreak, maxStreak, wonToday, guessDistribution } = getSavedData() || {}
+    console.log(guessDistribution)
 
     const nextWordleTimeLeft = () => {
         const nextWordleIn = (dayIndex + 1) * 1000 * 60 * 60 * 24 + releaseDate.valueOf() - Date.now(0)
@@ -62,6 +63,45 @@ function showStatistics() {
             <span class="data" data-wordle-played>${maxStreak || 0}</span>
             <span class="data-title">Max</span>
             <span class="data-title">Streak</span>
+        </div>
+    </div>
+    <div class="guess-distribution">
+        <h3>Guess Distribution</h3>
+        <div class="chart-row">
+            <div class="row-legend">1</div>
+            <div class="row-value">
+                <div class="chart-bar">0</div>
+            </div>
+        </div>
+        <div class="chart-row">
+            <div class="row-legend">2</div>
+            <div class="row-value">
+                <div class="chart-bar">0</div>
+            </div>
+        </div>
+        <div class="chart-row">
+            <div class="row-legend">3</div>
+            <div class="row-value">
+                <div class="chart-bar">0</div>
+            </div>
+        </div>
+        <div class="chart-row">
+            <div class="row-legend">4</div>
+            <div class="row-value">
+                <div class="chart-bar">0</div>
+            </div>
+        </div>
+        <div class="chart-row">
+            <div class="row-legend">5</div>
+            <div class="row-value">
+                <div class="chart-bar">0</div>
+            </div>
+        </div>
+        <div class="chart-row">
+            <div class="row-legend">6</div>
+            <div class="row-value">
+                <div class="chart-bar">0</div>
+            </div>
         </div>
     </div>
         ${(!getEmptyBoxes().length || wonToday) ?
