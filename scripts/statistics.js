@@ -18,10 +18,32 @@ function wordleShare() {
     }
     navigator.clipboard.writeText(text).then(() => createAlert('Copied to clipboard', 2000))
 }
+
+
+
 function showStatistics() {
     const { wordlePlayed, wordleWinCount, currentStreak, maxStreak, wonToday, guessDistribution } = getSavedData() || {}
-    console.log(guessDistribution)
 
+
+    function animateGuessChart() {
+        // max guessed number
+        const maxGuess = guessDistribution ? Math.max(...Object.values(guessDistribution)) : 0
+        const chartBars = document.querySelectorAll('.chart-bar')
+        chartBars.forEach(element => {
+            const legendValue = guessDistribution[element.dataset.legend] || 0
+            element.animate([
+                { width: (legendValue / maxGuess * 100) + '%' }
+            ], {
+                duration: 700,
+                fill: 'forwards',
+                easing: 'ease-out',
+                delay: 1000
+            })
+            for (let i = 1; i <= 20; i++) {
+                setTimeout(() => element.innerText = i === 20 ? legendValue : parseInt(Math.random() * 10), 100 * i)
+            }
+        })
+    }
     const nextWordleTimeLeft = () => {
         const nextWordleIn = (dayIndex + 1) * 1000 * 60 * 60 * 24 + releaseDate.valueOf() - Date.now(0)
         const hours = Math.floor(nextWordleIn / (1000 * 60 * 60))
@@ -70,37 +92,37 @@ function showStatistics() {
         <div class="chart-row">
             <div class="row-legend">1</div>
             <div class="row-value">
-                <div class="chart-bar">0</div>
+                <div class="chart-bar" data-legend="first" >0</div>
             </div>
         </div>
         <div class="chart-row">
             <div class="row-legend">2</div>
             <div class="row-value">
-                <div class="chart-bar">0</div>
+                <div class="chart-bar" data-legend="second" >0</div>
             </div>
         </div>
         <div class="chart-row">
             <div class="row-legend">3</div>
             <div class="row-value">
-                <div class="chart-bar">0</div>
+                <div class="chart-bar" data-legend="third" >0</div>
             </div>
         </div>
         <div class="chart-row">
             <div class="row-legend">4</div>
             <div class="row-value">
-                <div class="chart-bar">0</div>
+                <div class="chart-bar" data-legend="fourth" >0</div>
             </div>
         </div>
         <div class="chart-row">
             <div class="row-legend">5</div>
             <div class="row-value">
-                <div class="chart-bar">0</div>
+                <div class="chart-bar" data-legend="fifth" >0</div>
             </div>
         </div>
         <div class="chart-row">
             <div class="row-legend">6</div>
             <div class="row-value">
-                <div class="chart-bar">0</div>
+                <div class="chart-bar" data-legend="sixth" >0</div>
             </div>
         </div>
     </div>
@@ -121,4 +143,5 @@ function showStatistics() {
     container.innerHTML = statistics
     openModal(container)
     nextWordleTimeLeft()
+    animateGuessChart()
 }
