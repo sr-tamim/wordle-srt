@@ -39,7 +39,7 @@ function revealSettings() {
         </div>
         <footer>
             <div class="copyright-text">
-                ©️ 2022
+                ©️ ${new Date().getFullYear()}
                 <a href="https://sr-tamim.vercel.app" target="_blank">
                     Saifur Rahman Tamim
                 </a>

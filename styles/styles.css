@@ -136,18 +136,20 @@ main{
 
 #keyboard{
     width: 100%;
+    max-width: 55rem;
     display: grid;
     grid-template-columns: 100%;
     justify-items: center;
-    padding: clamp(2rem, 10vh, 4rem);
+    padding: clamp(2rem, 8vh, 4rem) 0;
 }
 #keyboard > .row{
     width: 100%;
-    max-width: 700px;
     display: flex;
     justify-content: center;
 }
 .keyboard_key{
+    min-width: min-content;
+    width: clamp(2.5rem, 8vw, 5rem);
     text-transform: uppercase;
     color: var(--primary-text-color);
     font-size: clamp(1.8rem, 5vw, 2.5rem);
