@@ -114,6 +114,10 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
     // check if 5 letters are there or not
     if (boxes.length < 5) {
         createAlert("Not enough letters")
+        boxes.forEach(box => {
+            box.dataset.animation = "shake"
+            setTimeout(() => boxes.forEach(box => box.dataset.animation = "idle"), SHAKE_DURATION)
+        })
         allowInput()
         return
     }
@@ -124,7 +128,7 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
     // unknown word animation
     if (dictionary && !dictionary.includes(submission)) {
         createAlert("Unknown word")
-        boxes.forEach((box, i) => {
+        boxes.forEach(box => {
             box.dataset.animation = "shake"
             setTimeout(() => boxes.forEach(box => box.dataset.animation = "idle"), SHAKE_DURATION)
         })
