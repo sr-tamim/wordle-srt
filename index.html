@@ -22,7 +22,9 @@
     <script>
         // set up dark mode
         const userData = JSON.parse(localStorage.getItem('user-data'))
-        userData && (userData?.darkMode === false && document.querySelector('html').classList.remove('dark'))
+        const htmlClasslist = document.querySelector('html').classList
+        userData?.darkMode === false && htmlClasslist.remove('dark');
+        userData?.highContrastMode === true ? htmlClasslist.add('high-contrast') : htmlClasslist.remove('high-contrast');
     </script>
 </head>
 
