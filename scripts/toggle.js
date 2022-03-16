@@ -9,10 +9,7 @@ function toggleDarkMode(status) {
 
     darkModeStatus ? htmlClassList.add('dark') : htmlClassList.remove('dark')
 
-    const savedData = getSavedData()
-    const newData = savedData ? { ...savedData, darkMode: darkModeStatus }
-        : { darkMode: darkModeStatus }
-    localStorage.setItem('user-data', JSON.stringify(newData))
+    saveDataInLocalStorage({ darkMode: darkModeStatus })
 
 
     document.querySelector('.toggle-dark-mode').innerHTML = darkModeStatus ? `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
@@ -32,8 +29,5 @@ function toggleHighContrastMode(status) {
 
     highContrastMode ? htmlClassList.add('high-contrast') : htmlClassList.remove('high-contrast')
 
-    const savedData = getSavedData()
-    const newData = savedData ? { ...savedData, highContrastMode }
-        : { highContrastMode }
-    localStorage.setItem('user-data', JSON.stringify(newData))
+    saveDataInLocalStorage({ highContrastMode })
 }

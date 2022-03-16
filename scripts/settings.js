@@ -25,6 +25,12 @@ function revealSettings() {
         <h2>Settings</h2>
         <div class="settings-body">
             <div class="toggle-body">
+                <span>Hard mode</span>
+                <label class="toggle hard-mode" onclick="toggleHardMode()" title="Toggle hard mode">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="toggle-body">
                 <span>Dark theme</span>
                 <label class="toggle dark-mode" onclick="toggleDarkMode()" title="Toggle dark mode">
                     <span class="toggle-slider"></span>
