@@ -25,6 +25,7 @@
         const htmlClasslist = document.querySelector('html').classList
         userData?.darkMode === false && htmlClasslist.remove('dark');
         userData?.highContrastMode === true ? htmlClasslist.add('high-contrast') : htmlClasslist.remove('high-contrast');
+        userData?.hardMode === true ? htmlClasslist.add('hard-mode') : htmlClasslist.remove('hard-mode');
     </script>
 </head>
 
