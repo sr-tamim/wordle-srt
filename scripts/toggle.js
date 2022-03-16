@@ -21,7 +21,6 @@ function toggleDarkMode(status) {
         </svg>`
 }
 
-
 function toggleHighContrastMode(status) {
     const htmlClassList = document.querySelector('html').classList;
 
@@ -30,4 +29,14 @@ function toggleHighContrastMode(status) {
     highContrastMode ? htmlClassList.add('high-contrast') : htmlClassList.remove('high-contrast')
 
     saveDataInLocalStorage({ highContrastMode })
+}
+
+function toggleHardMode(status) {
+    const htmlClassList = document.querySelector('html').classList;
+
+    const hardMode = status !== undefined ? status : ![...htmlClassList].includes('hard-mode')
+
+    hardMode ? htmlClassList.add('hard-mode') : htmlClassList.remove('hard-mode')
+
+    saveDataInLocalStorage({ hardMode })
 }
