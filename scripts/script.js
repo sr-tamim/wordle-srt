@@ -136,6 +136,33 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
         return
     }
 
+    if (getSavedData()?.hardMode && checkWinner) {
+        let error = false
+        const correctedBoxes = board.querySelectorAll('[data-state="correct"]')
+        const letterPresentBoxes = board.querySelectorAll('[data-state="present"]')
+        for (let i = 0; i < correctedBoxes.length; i++) {
+            const correctBox = correctedBoxes[i]
+            const correctBoxIndex = [...board.children].indexOf(correctBox) % 5
+            if (boxes[correctBoxIndex].textContent !== correctBox.textContent) {
+                error = true
+                createAlert(`Word must contain "${correctBox.textContent.toUpperCase()}" at position ${correctBoxIndex + 1}`)
+                break
+            }
+        }
+        for (let i = 0; i < letterPresentBoxes.length; i++) {
+            const letter = letterPresentBoxes[i].textContent
+            if (!boxes.filter(box => box.textContent === letter).length) {
+                error = true
+                createAlert(`Guess must contain "${letter.toUpperCase()}"`)
+                break
+            }
+        }
+        if (error) {
+            allowInput()
+            return
+        }
+    }
+
     checkWinner && AutoSaveToLocalStorage() // save data to local storage
 
     boxes.forEach((box, index) => {

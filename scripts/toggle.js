@@ -32,6 +32,11 @@ function toggleHighContrastMode(status) {
 }
 
 function toggleHardMode(status) {
+    if (!getSavedData()?.hardMode && getEmptyBoxes().length !== 30) {
+        hideSettings()
+        createAlert("Hard mode can only be enabled at the start of a round")
+        return
+    }
     const htmlClassList = document.querySelector('html').classList;
 
     const hardMode = status !== undefined ? status : ![...htmlClassList].includes('hard-mode')

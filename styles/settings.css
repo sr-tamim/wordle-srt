@@ -32,6 +32,9 @@
     font-size: clamp(1.8rem, 2vw, 2.5rem);
     margin: 0;
 }
+.settings-body > .toggle-body > span > small{
+    font-size: clamp(0.7rem, 2vw, 1rem);
+}
 .settings-body > .toggle-body > button{
     display: grid;
     place-items: center;
