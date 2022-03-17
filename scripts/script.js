@@ -150,6 +150,7 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
             }
         }
         for (let i = 0; i < letterPresentBoxes.length; i++) {
+            if (error) break
             const letter = letterPresentBoxes[i].textContent
             if (!boxes.filter(box => box.textContent === letter).length) {
                 error = true
