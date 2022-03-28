@@ -65,6 +65,7 @@ function showStatistics() {
 
     const container = document.createElement('div')
     container.setAttribute('id', 'statistics-container')
+    container.dataset.animation = 'zoom-in'
 
     const statistics = `<h3>Statistics</h3>
     <div class="player-statistics">

@@ -306,7 +306,7 @@ function AutoSaveToLocalStorage() {
 // modal close listener
 function openModal(elements) {
     modal.style.display = 'flex'
-    modal.dataset.animation = 'zoom-in'
+    modal.dataset.animation = 'fade-in'
     modal.appendChild(elements)
 
     modal.addEventListener('click', () => {
