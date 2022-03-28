@@ -128,6 +128,8 @@ main{
     border: var(--board-box-border);
     border-radius: 0.3rem;
     transition: background 50ms ease;
+    user-select: none;
+    -webkit-user-select: none;
 }
 #letter-board > [data-state="active"]{
     border: var(--board-box-active-border);
@@ -161,6 +163,7 @@ main{
     transition: transform 100ms step-start, background 500ms;
     cursor: pointer;
     user-select: none;
+    -webkit-user-select: none;
 }
 .keyboard_key > svg{
     fill: var(--primary-text-color);
