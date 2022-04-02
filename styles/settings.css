@@ -1,5 +1,4 @@
-
-#settings-container{
+#settings-container {
     width: 100%;
     height: 100%;
     max-width: 50rem;
@@ -8,59 +7,67 @@
     justify-content: space-between;
 }
 
-#settings-container > h2{
+#settings-container>h2 {
     text-align: center;
     font-size: clamp(2rem, 3vw, 3rem);
     letter-spacing: 0.2rem;
 }
 
-#settings-container > .settings-body{
+#settings-container>.settings-body {
     flex-grow: 1;
     padding: 1rem clamp(2rem, 2vw, 4rem);
 }
-.settings-body > div{
+
+.settings-body>div {
     border-top: 1px solid var(--light-gray);
     border-bottom: 1px solid var(--light-gray);
     padding: 1rem 0;
 }
-.settings-body > .toggle-body{
+
+.settings-body>.toggle-body {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.settings-body > .toggle-body > span{
+
+.settings-body>.toggle-body>span {
     font-size: clamp(1.8rem, 2vw, 2.5rem);
     margin: 0;
 }
-.settings-body > .toggle-body > span > small{
+
+.settings-body>.toggle-body>span>small {
     font-size: clamp(0.7rem, 2vw, 1rem);
 }
-.settings-body > .toggle-body > button{
+
+.settings-body>.toggle-body>button {
     display: grid;
     place-items: center;
     border: 0;
     padding: 0;
 }
 
-#settings-container > footer{
+#settings-container>footer {
     display: flex;
     justify-content: space-between;
     padding: 2rem 1rem;
     border-top: 0.2rem dashed var(--light-gray);
 }
-.social-links{
+
+.social-links {
     display: flex;
     align-items: center;
 }
-.social-links > a{
+
+.social-links>a {
     text-decoration: none;
 }
-.social-links > a > svg{
+
+.social-links>a>svg {
     width: clamp(2rem, 2vw, 4rem);
     fill: var(--primary-text-color);
     margin: 0 1rem;
 }
 
-.copyright-text{
+.copyright-text {
     font-size: clamp(1.6rem, 3vw, 2rem);
 }

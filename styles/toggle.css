@@ -4,6 +4,7 @@
     width: 5rem;
     height: 2.6rem;
 }
+
 .toggle-slider {
     position: absolute;
     cursor: pointer;
@@ -26,14 +27,15 @@
     transition: 300ms;
 }
 
-html.dark .toggle.dark-mode > .toggle-slider,
-html.high-contrast .toggle.high-contrast > .toggle-slider,
-html.hard-mode .toggle.hard-mode > .toggle-slider{
+html.dark .toggle.dark-mode>.toggle-slider,
+html.high-contrast .toggle.high-contrast>.toggle-slider,
+html.hard-mode .toggle.hard-mode>.toggle-slider {
     background-color: var(--primary-color);
 }
-html.dark .toggle.dark-mode > .toggle-slider::before,
-html.high-contrast .toggle.high-contrast > .toggle-slider::before,
-html.hard-mode .toggle.hard-mode > .toggle-slider::before{
+
+html.dark .toggle.dark-mode>.toggle-slider::before,
+html.high-contrast .toggle.high-contrast>.toggle-slider::before,
+html.hard-mode .toggle.hard-mode>.toggle-slider::before {
     left: calc(100% - 0.3rem);
     transform: translateX(-100%);
 }

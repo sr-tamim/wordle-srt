@@ -1,17 +1,17 @@
-
 /* get trebuchetMS font from .ttf file */
 @font-face {
     font-family: 'Trebuchet MS';
     src: url(trebuchetMS.ttf);
 }
 
-*{
+* {
     box-sizing: border-box;
     font-family: var(--font-family);
     color: var(--primary-text-color);
     -webkit-tap-highlight-color: transparent;
 }
-html{
+
+html {
     --primary-color: rgb(0, 221, 100);
     --secondary-color: rgb(44, 44, 44);
     --color-gray: rgb(100, 100, 100);
@@ -30,7 +30,8 @@ html{
     font-size: 10px;
     --dark-mode-transition-time: 1s;
 }
-html.dark{
+
+html.dark {
     --primary-color: rgb(0, 151, 68);
     --color-gray: rgb(51, 51, 51);
     --dark-gray: rgb(51, 51, 51);
@@ -42,13 +43,14 @@ html.dark{
     --board-box-border: 1px solid var(--dark-gray);
     --board-box-active-border: 2px solid var(--light-gray);
 }
-html.high-contrast{
+
+html.high-contrast {
     --primary-color: #DD6D34;
     --correct-color: #DD6D34;
     --present-color: #78ADE1;
 }
 
-body{
+body {
     background-color: var(--background-color);
     position: absolute;
     top: 0;
@@ -60,10 +62,12 @@ body{
     flex-direction: column;
     transition: background var(--dark-mode-transition-time);
 }
-button{
+
+button {
     cursor: pointer;
 }
-header{
+
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -72,33 +76,38 @@ header{
     padding: 0 clamp(2rem, 3vw, 3rem);
     margin: 0 auto;
 }
-.heading-text{
+
+.heading-text {
     text-align: center;
     text-transform: uppercase;
     padding-top: 0.5rem;
     padding-bottom: 1rem;
 }
-.heading-text h1{
+
+.heading-text h1 {
     font-size: clamp(2rem, 2vw, 3rem);
     letter-spacing: 0.3rem;
     margin: 0;
 }
-.heading-text a{
+
+.heading-text a {
     font-size: clamp(1rem, 1vw, 1.4rem);
     font-weight: bold;
     margin: 0;
 }
-.header-elements > span{
+
+.header-elements>span {
     margin: 0 0.5rem;
     cursor: pointer;
 }
-.header-elements svg{
+
+.header-elements svg {
     width: clamp(2rem, 2vw, 2.5rem);
     height: clamp(2rem, 2vw, 2.5rem);
     fill: var(--primary-text-color);
 }
 
-main{
+main {
     width: 100%;
     flex-grow: 1;
     display: flex;
@@ -108,7 +117,7 @@ main{
     padding: 1rem;
 }
 
-#letter-board{
+#letter-board {
     max-width: 500px;
     flex-grow: 1;
     display: grid;
@@ -117,7 +126,8 @@ main{
     grid-gap: 0.7rem;
     align-content: center;
 }
-#letter-board > .box{
+
+#letter-board>.box {
     text-transform: uppercase;
     font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans', sans-serif;
     font-size: clamp(2rem, 7vw, 4rem);
@@ -131,12 +141,13 @@ main{
     user-select: none;
     -webkit-user-select: none;
 }
-#letter-board > [data-state="active"]{
+
+#letter-board>[data-state="active"] {
     border: var(--board-box-active-border);
 }
 
 
-#keyboard{
+#keyboard {
     width: 100%;
     max-width: 55rem;
     display: grid;
@@ -144,12 +155,14 @@ main{
     justify-items: center;
     padding: clamp(2rem, 8vh, 4rem) 0;
 }
-#keyboard > .row{
+
+#keyboard>.row {
     width: 100%;
     display: flex;
     justify-content: center;
 }
-.keyboard_key{
+
+.keyboard_key {
     min-width: min-content;
     width: clamp(2.5rem, 8vw, 5rem);
     text-transform: uppercase;
@@ -165,31 +178,35 @@ main{
     user-select: none;
     -webkit-user-select: none;
 }
-.keyboard_key > svg{
+
+.keyboard_key>svg {
     fill: var(--primary-text-color);
 }
 
 
-[data-state="present"]{
+[data-state="present"] {
     background-color: var(--present-color);
     color: var(--secondary-text-color);
 }
-[data-state="correct"]{
+
+[data-state="correct"] {
     background-color: var(--correct-color);
     color: var(--secondary-text-color);
 }
-[data-state="wrong"]{
+
+[data-state="wrong"] {
     background-color: var(--color-gray);
     color: var(--secondary-text-color);
 }
 
 @media screen and (min-width: 900px) and (min-height: 800px) {
-    :root{
+    :root {
         font-size: 12px;
     }
 }
+
 @media screen and (min-width: 1900px) and (min-height: 1000px) {
-    :root{
+    :root {
         font-size: 14px;
     }
 }

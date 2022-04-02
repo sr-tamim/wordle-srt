@@ -1,5 +1,4 @@
-
-#overlay-container{
+#overlay-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,7 +11,7 @@
     z-index: 99;
 }
 
-#overlay-close{
+#overlay-close {
     position: absolute;
     right: clamp(1rem, 1.5vw, 2rem);
     top: clamp(1rem, 1.3vw, 2rem);
@@ -21,7 +20,8 @@
     padding: 1rem;
     margin: 0;
 }
-#overlay-close > svg{
+
+#overlay-close>svg {
     fill: var(--primary-text-color);
     width: clamp(1.8rem, 3vw, 2.5rem);
     height: clamp(1.8rem, 3vw, 2.5rem);

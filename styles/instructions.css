@@ -1,34 +1,38 @@
-#instructions-container{
+#instructions-container {
     width: 100%;
     max-width: 40rem;
     background-color: var(--transparent-background);
     padding: 2rem;
 }
 
-#instructions-container > h1{
+#instructions-container>h1 {
     font-size: clamp(1.8rem, 3vw, 2.5rem);
     text-transform: uppercase;
     text-align: center;
     margin-top: 0;
 }
-#instructions-container > p{
+
+#instructions-container>p {
     font-size: 1.4rem;
 }
-#instructions-container > h4{
+
+#instructions-container>h4 {
     font-size: 1.5rem;
 }
-#instructions-container > hr{
+
+#instructions-container>hr {
     border-color: var(--light-gray);
 }
 
-#instructions-container > .instruction-boxes{
+#instructions-container>.instruction-boxes {
     display: grid;
     grid-template-columns: repeat(5, clamp(2.5rem, 10vw, 5rem));
     grid-template-rows: repeat(1, clamp(2.5rem, 10vw, 5rem));
     grid-gap: 1rem;
     margin: 3rem 0 1.5rem 0;
 }
-#instructions-container > .instruction-boxes > .box{
+
+#instructions-container>.instruction-boxes>.box {
     text-transform: uppercase;
     font-size: clamp(1.8rem, 5vw, 3.5rem);
     font-weight: bold;
@@ -37,6 +41,7 @@
     align-items: center;
     border-radius: 0.3rem;
 }
-#instructions-container > .instruction-boxes > .box:not([data-state]){
+
+#instructions-container>.instruction-boxes>.box:not([data-state]) {
     border: 2px solid var(--light-gray)
 }

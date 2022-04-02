@@ -1,5 +1,4 @@
-
-#alerts-container{
+#alerts-container {
     display: none;
     position: absolute;
     top: 15%;
@@ -8,7 +7,8 @@
     font-size: clamp(1.8rem, 3vw, 3rem);
     z-index: 50;
 }
-#alerts-container > .alert{
+
+#alerts-container>.alert {
     color: black;
     background-color: whitesmoke;
     text-align: center;
