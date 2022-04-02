@@ -308,12 +308,18 @@ function openModal(elements) {
     modal.style.display = 'flex'
     modal.dataset.animation = 'fade-in'
     modal.appendChild(elements)
+    document.querySelector('main').style.filter = 'blur(5px)'
+    document.querySelector('header').style.filter = 'blur(5px)'
 
     modal.addEventListener('click', () => {
         modal.dataset.animation = 'fade-out'
+        document.querySelector('main').style.filter = ''
+        document.querySelector('header').style.filter = ''
         modal.addEventListener('animationend', () => {
             modal.style.display = 'none'
-            modal.lastChild && modal.removeChild(modal.lastChild)
+            while (modal.lastChild) {
+                modal.removeChild(modal.lastChild)
+            }
         }, { once: true })
     }, { once: true })
 }
