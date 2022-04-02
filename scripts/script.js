@@ -308,11 +308,13 @@ function openModal(elements) {
     modal.style.display = 'flex'
     modal.dataset.animation = 'fade-in'
     modal.appendChild(elements)
+    document.body.style.overflow = 'hidden'
     document.querySelector('main').style.filter = 'blur(5px)'
     document.querySelector('header').style.filter = 'blur(5px)'
 
     modal.addEventListener('click', () => {
         modal.dataset.animation = 'fade-out'
+        document.body.style.overflow = ''
         document.querySelector('main').style.filter = ''
         document.querySelector('header').style.filter = ''
         modal.addEventListener('animationend', () => {
