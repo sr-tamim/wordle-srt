@@ -208,8 +208,10 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                         const savedData = getSavedData()
                         const lastWin = new Date(savedData?.lastWinDate) || undefined
                         const today = new Date()
-                        const currentStreak = lastWin ? ((lastWin.getDate() === today.getDate - 1 && lastWin.getMonth() === today.getMonth() && lastWin.getFullYear() === today.getFullYear()) ?
-                            savedData.currentStreak + 1 : 1) : 1;
+                        const currentStreak = lastWin ?
+                            ((lastWin.getDate() === today.getDate() - 1 && lastWin.getMonth() === today.getMonth() && lastWin.getFullYear() === today.getFullYear()) ?
+                                savedData.currentStreak + 1 : 1)
+                            : 0;
                         const maxStreak = savedData.maxStreak ? (savedData.maxStreak < currentStreak ? currentStreak : savedData.maxStreak)
                             : currentStreak;
 
