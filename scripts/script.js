@@ -206,23 +206,22 @@ function processSubmit(boxes = getActiveBoxes(), checkWinner = true) {
                         })
 
                         const savedData = getSavedData()
-                        const lastWin = new Date(savedData?.lastWinDate) || undefined
-                        const today = new Date()
-                        const currentStreak = lastWin ?
-                            ((lastWin.getDate() === today.getDate() - 1 && lastWin.getMonth() === today.getMonth() && lastWin.getFullYear() === today.getFullYear()) ?
-                                savedData.currentStreak + 1 : 1)
-                            : 0;
-                        const maxStreak = savedData.maxStreak ? (savedData.maxStreak < currentStreak ? currentStreak : savedData.maxStreak)
+                        const currentStreak = savedData?.lastWordleWon === dayIndex ?
+                            savedData.currentStreak + 1 : 1;
+                        const maxStreak = savedData?.maxStreak ? (savedData.maxStreak < currentStreak ? currentStreak : savedData.maxStreak)
                             : currentStreak;
 
+                        // make guess distribution
                         const guessDistribution = savedData?.guessDistribution || {}
                         const guessArray = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth']
                         const todaysGuess = guessArray[5 - (getEmptyBoxes().length / 5)]
                         guessDistribution[todaysGuess] = guessDistribution[todaysGuess] + 1 || 1;
+
+                        // save all data in local storage
                         saveDataInLocalStorage({
                             wordlePlayed: savedData?.wordlePlayed + 1 || 1,
                             wordleWinCount: savedData?.wordleWinCount + 1 || 1,
-                            lastWinDate: Date.now(), wonToday: true,
+                            lastWordleWon: dayIndex + 1, wonToday: true,
                             currentStreak, maxStreak, guessDistribution
                         })
 
